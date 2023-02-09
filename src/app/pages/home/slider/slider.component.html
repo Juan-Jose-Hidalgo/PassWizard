@@ -1,0 +1,7 @@
+<div class="pass-slider">
+    <mat-icon class="pass-slider__icon pass-slider__icon--start" (click)="changeLength(-1)">arrow_back_ios</mat-icon>
+    <mat-slider max="16" min="8" step="1">
+        <input matSliderThumb name="slider" [(ngModel)]="inputLength" (ngModelChange)="changeInputLength()">
+    </mat-slider>
+    <mat-icon class="pass-slider__icon pass-slider__icon--end" (click)="changeLength(1)">arrow_forward_ios</mat-icon>
+</div>

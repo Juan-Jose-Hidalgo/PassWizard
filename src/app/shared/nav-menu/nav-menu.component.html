@@ -1,20 +1,22 @@
-<mat-sidenav-container fullscreen class="menu">
+<mat-sidenav-container fullscreen>
 
     <mat-sidenav #sidenav mode="push">
         <!--* Vertical toolbar-->
         <mat-toolbar color="primary" class="menu__toolbar">
             <h1>Menú</h1>
-            <button mat-mini-fab color="primary" (click)="sidenav.toggle()">
+            <button mat-mini-fab color="accent" (click)="sidenav.toggle()">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-toolbar>
 
         <mat-list>
             <!--* Menú elements-->
-            <a mat-list-item *ngFor="let option of menuOptions" [href]="option.url" class="menu__a">
-                <mat-icon matListItemIcon>{{option.icon}}</mat-icon>
-                <span class="menu__span" matListItemTitle>{{option.name}}</span>
-            </a>
+            <nav>
+                <a mat-list-item *ngFor="let option of menuOptions" [href]="option.url" class="menu__a">
+                    <mat-icon matListItemIcon>{{option.icon}}</mat-icon>
+                    <span class="menu__span" matListItemTitle>{{option.name}}</span>
+                </a>
+            </nav>
         </mat-list>
 
     </mat-sidenav>
@@ -34,4 +36,7 @@
 
     </mat-toolbar>
 
+    <main>
+        <router-outlet></router-outlet>
+    </main>
 </mat-sidenav-container>

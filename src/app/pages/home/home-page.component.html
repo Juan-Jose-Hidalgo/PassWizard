@@ -1,0 +1,67 @@
+<div class="main-component">
+    <!--* TITLE BLOCK-->
+    <div class="title">
+        <h2 class="title__h1">Gestor de Contraseñas</h2>
+    </div>
+
+    <div class="container">
+
+        <!--* TEXT BLOCK-->
+        <div class="pass-text">
+            <p class="pass-text__p">Con esta aplicación podrás generar un password en cuestión de segundos. Simplemente
+                indica los símbolos
+                que quieres utilizar y la longitud, dale a generar y voilá! ya tienes tu constraseña para utilizarla
+                donde quieras</p>
+
+            <p class="pass-text__p">Registrándote podrás guardar todas tus contraseñas, darles un nombre, editarlas y
+                organizarlas por
+                categorías.</p>
+        </div>
+
+        <div class="password-content">
+            <!--* Image Block-->
+            <app-password-image [image]="image" [urlImage]="urlImage" [author]="author"></app-password-image>
+
+            <div class="password">
+                <!--* Generated Password-->
+                <app-password-gen [password]="password" [passwordStrength]="passwordStrength"
+                    [badge]="badge"></app-password-gen>
+
+                <!--* PASSWORD LENGTH BLOCK-->
+                <div class="pass-length">
+                    <label for="length">Longitud de la contraseña:</label>
+                    <input class="pass-length__input" name="length" id="length" type="number" [(ngModel)]="data.length"
+                        max="16" min="8">
+                </div>
+
+                <!--* SLIDER BLOCK-->
+                <app-slider [inputLength]="data.length" (inputEmit)="changeDataLength($event)"
+                    (lengthEmit)="setValue($event)"></app-slider>
+
+                <!--* CHECKBOXES BLOCK-->
+                <div class="pass-checks">
+                    <p>Caracteres usados:</p>
+                    <div class="pass-checks__group">
+                        <p><mat-checkbox color="primary" name="numbers" [(ngModel)]="data.numbers">0123</mat-checkbox>
+                        </p>
+                        <p><mat-checkbox color="primary" name="lowerCase"
+                                [(ngModel)]="data.lowerCase">abcd</mat-checkbox>
+                        </p>
+                        <p><mat-checkbox color="primary" name="upperCase"
+                                [(ngModel)]="data.upperCase">ABCD</mat-checkbox>
+                        </p>
+                        <p><mat-checkbox color="primary" name="symbols" [(ngModel)]="data.symbols">@&%#</mat-checkbox>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pass-buttons">
+                    <button class="pass-buttons__btn" mat-raised-button color="primary"
+                        (click)="generatePassword()">Generar</button>
+                    <button class="pass-buttons__btn" mat-raised-button color="accent">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

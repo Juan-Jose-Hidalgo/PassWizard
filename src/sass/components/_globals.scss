@@ -1,0 +1,5 @@
+@use "mixins" as mix;
+
+.container {
+    @include mix.flex-box(column, nowrap, center, center);
+}
