@@ -1,0 +1,29 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+
+.social__ul {
+    @include mix.flex-box(row, nowrap, space-between, center);
+}
+
+.social__svg {
+    @include mix.box-shadow();
+    color: map-get($map: var.$colors-map, $key: "white-2");
+    border-radius: 50%;
+    width: 2rem;
+    transition: all .3s;
+
+    &:hover{
+        color: map-get($map: var.$colors-map, $key: "accent-A100");
+    }
+}
+
+// .social-nav__a {
+//     color: map-get(var.$colors-map, "whit");
+//     font-size: 1.5rem;
+//     transition: all .3s;
+
+//     &:hover {
+//         color: map-get(var.$colors-map, "secondary");
+//     }
+// }
