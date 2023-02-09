@@ -7,17 +7,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 import { MaterialModule } from './shared/material/material.module';
+import { HomeModule } from './pages/home/home.module';
+import { ErrorPageComponent } from './shared/error-page/error-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

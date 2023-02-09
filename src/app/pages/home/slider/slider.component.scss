@@ -1,0 +1,29 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+.pass-slider {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 6fr 1fr;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.pass-slider__icon {
+    color: map-get($map: var.$colors-map, $key: "primary-500");
+    cursor: pointer;
+    font-weight: 700;
+    transition: all .3s;
+
+    &:hover {
+        color: map-get($map: var.$colors-map, $key: "primary-800");
+    }
+}
+
+.pass-slider__icon--start {
+    justify-self: start;
+}
+
+.pass-slider__icon--end {
+    justify-self: end;
+}

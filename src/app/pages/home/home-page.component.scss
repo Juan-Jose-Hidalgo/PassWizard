@@ -1,0 +1,105 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+.main-component {
+    max-width: 1320px;
+    width: 90%;
+    margin: 0 auto;
+    @include mix.flex-box(column, nowrap, space-around, center);
+}
+
+//* Title styles.
+.title__h1 {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    text-align: center;
+    font-size: 2em;
+    font-weight: 700;
+    margin: 1rem 0;
+
+    @media (min-width: 992px) {
+        font-size: 3em;
+    }
+}
+
+//* Styles for text block
+.pass-text {
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    line-height: 1.3;
+}
+
+.pass-text__p {
+    margin-bottom: 1rem;
+
+    @media (min-width: 992px) {
+        font-size: 1.3em;
+    }
+}
+
+//* Styles for the password-content block
+.password-content {
+    background-image: url('../../../assets/img/iconos.png');
+    background-color: map-get($map: var.$colors-map, $key: "white");
+    width: 100%;
+    margin-top: 1rem;
+    padding: 2rem 0;
+    border: .9375rem solid map-get($map: var.$colors-map, $key: "white-2");
+    border-radius: .625rem;
+    @include mix.flex-box(column, nowrap, center, center);
+    @include mix.box-shadow();
+    gap: 1.2rem;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0;
+    }
+}
+
+//* Styles for the password length block.
+.pass-length {
+    @include mix.flex-box(row, wrap, space-between, center);
+    font-family: map-get($map: var.$fonts-map, $key: "primary");
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+}
+
+.pass-length__input {
+    border: none;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    outline: none;
+    color: map-get($map: var.$colors-map, $key: "primary-500");
+
+    //Delete input arrows
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+//* Styles for the checkboxes.
+.pass-checks {
+    @include mix.flex-box(column, nowrap, center, center);
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.pass-checks__group {
+    width: 100%;
+    @include mix.flex-box(row, nowrap, space-between);
+}
+
+//* Styles for the buttons.
+.pass-buttons {
+    @include mix.flex-box(row, nowrap, space-between, center);
+}
+
+.pass-buttons__btn {
+    text-transform: uppercase;
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    font-weight: 700;
+}
