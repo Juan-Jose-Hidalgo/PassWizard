@@ -9,19 +9,24 @@ import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 import { MaterialModule } from './shared/material/material.module';
 import { HomeModule } from './pages/home/home.module';
 import { ErrorPageComponent } from './shared/error-page/error-page.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { SocialNavComponent } from './shared/social-nav/social-nav.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    FooterComponent,
+    SocialNavComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HomeModule
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
