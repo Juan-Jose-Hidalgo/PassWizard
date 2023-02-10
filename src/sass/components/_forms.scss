@@ -1,0 +1,11 @@
+@use "mixins" as mix;
+
+.form {
+    @include mix.flex-box(column, nowrap, space-between);
+    margin-top: 2rem;
+}
+
+.form__label {
+    @include mix.flex-box(row, nowrap, center);
+    gap: .3rem;
+}

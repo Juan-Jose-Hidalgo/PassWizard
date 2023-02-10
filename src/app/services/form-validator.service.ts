@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { DataPassword } from '../models/data-password.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormValidatorService {
+
+  emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
   constructor() { }
 
@@ -29,5 +32,9 @@ export class FormValidatorService {
   lengthIsValid(length: number) {
     if (length < 8 || length > 16 || length === null) return false;
     return true;
+  }
+
+  fieldInvalid(name: string, form: FormGroup) {
+    return form.controls[name]?.errors && form.controls[name]?.touched;
   }
 }
