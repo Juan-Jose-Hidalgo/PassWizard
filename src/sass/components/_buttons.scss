@@ -1,0 +1,26 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+//* NORMAL BUTTON
+.btn {
+    text-transform: uppercase;
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    font-weight: 700;
+
+    @media(max-width: 768px) {
+        width: 100%;
+    }
+}
+
+//* CLOSE BUTTON
+.icon--close {
+    transition: all .5s !important;
+}
+
+.btn--close {
+    &:hover {
+        .icon--close {
+            transform: rotate(180deg);
+        }
+    }
+}

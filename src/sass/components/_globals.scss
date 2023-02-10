@@ -1,5 +1,7 @@
 @use "mixins" as mix;
+@use "variables" as var;
 
+//* CONTAINER
 .container {
     @include mix.flex-box(column, nowrap, center, center);
 }
