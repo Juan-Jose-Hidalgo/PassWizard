@@ -2,16 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
-import { MaterialModule } from '../material/material.module';
+import { RegisterComponent } from './register/register.component';
+import { MaterialModule } from 'src/app/shared/material/material.module';
 
 
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
+    AuthRoutingModule,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule

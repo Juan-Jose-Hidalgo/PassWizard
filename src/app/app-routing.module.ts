@@ -6,7 +6,11 @@ const routes: Routes = [
     path: 'inicio',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
   },
-  { path: ' ', redirectTo: 'inicio' }
+  {
+    path: 'acceso',
+    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+  },
+  { path: '**', redirectTo: 'inicio' }
 ];
 
 @NgModule({

@@ -1,0 +1,81 @@
+<div class="container container--width">
+
+    <h1 class="h1">Nuevo Usuario</h1>
+
+
+    <div class="container container--content">
+        <form [formGroup]="registerForm" class="form">
+
+            <!--* Name block-->
+            <mat-form-field class="form__field">
+                <mat-label class="form__label">
+
+                    <mat-icon>face</mat-icon>
+                    <span>Nombre</span>
+                </mat-label>
+
+                <input type="text" matInput name="name" formControlName="name" placeholder="Ex. Juan Hidalgo">
+                <mat-error>
+                    {{nameMsg}}
+                </mat-error>
+            </mat-form-field>
+
+            <!--* Username block-->
+            <mat-form-field class="form__field">
+                <mat-label class="form__label">
+                    <mat-icon>face_4</mat-icon>
+                    <span>Nombre de usuario</span>
+                </mat-label>
+
+                <input type="text" matInput name="username" formControlName="username" placeholder="Ex. konra">
+                <mat-error>
+                    {{usernameMsg}}
+                </mat-error>
+            </mat-form-field>
+
+            <!--* Email block-->
+            <mat-form-field class="form__field form__field--email">
+                <mat-label class="form__label">
+                    <mat-icon>alternate_email</mat-icon>
+                    <span>Email</span>
+                </mat-label>
+
+                <input type="email" matInput name="email" formControlName="email" placeholder="Ex. pat@example.com">
+                <mat-error>
+                    {{emailMsg}}
+                </mat-error>
+            </mat-form-field>
+
+            <!--* Password block-->
+            <mat-form-field class="form__field">
+                <mat-label class="form__label">
+                    <mat-icon>lock</mat-icon>
+                    <span>Contraseña</span>
+                </mat-label>
+
+                <input type="password" matInput name="password" formControlName="password">
+                <mat-error>
+                    {{passwordMsg}}
+                </mat-error>
+            </mat-form-field>
+
+            <!--* Confirm Password block-->
+            <mat-form-field class="form__field">
+                <mat-label class="form__label">
+                    <mat-icon>lock</mat-icon>
+                    <span>Confirmar Contraseña</span>
+                </mat-label>
+
+                <input type="password" matInput name="confirmPassword" formControlName="confirmPassword">
+                <mat-error>
+                    {{confirmPasswordMsg}}
+                </mat-error>
+            </mat-form-field>
+
+            <button type="submit" class="btn" mat-raised-button color="primary" [disabled]="(registerForm.invalid)?true:false" (click)="register()">Registrarse</button>
+        </form>
+
+        <p>¿Ya tienes cuenta? <span class="form__span" routerLink="/acceso/login">Inicia Sesión</span></p>
+
+    </div>
+</div>

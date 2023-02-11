@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { DataPassword } from '../models/data-password.interface';
 
 @Injectable({
@@ -36,5 +36,20 @@ export class FormValidatorService {
 
   fieldInvalid(name: string, form: FormGroup) {
     return form.controls[name]?.errors && form.controls[name]?.touched;
+  }
+
+  comparePasswords(pass1: string, pass2: string) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value1 = control.get(pass1)?.value;
+      const value2 = control.get(pass2)?.value;
+
+      if (value1 !== value2) {
+        control.get(pass2)?.setErrors({ diffPass: true });
+        return { diffPass: true };
+      }
+
+      control.get('pass2')?.setErrors({ diffPass: false });
+      return null;
+    }
   }
 }
