@@ -9,13 +9,14 @@
             <!--* Name block-->
             <mat-form-field class="form__field">
                 <mat-label class="form__label">
+
                     <mat-icon>face</mat-icon>
-                    <span>Name</span>
+                    <span>Nombre</span>
                 </mat-label>
 
-                <input type="email" matInput name="email" formControlName="email" placeholder="Ex. pat@example.com">
+                <input type="text" matInput name="name" formControlName="name" placeholder="Ex. Juan Hidalgo">
                 <mat-error>
-                    {{emailMsg}}
+                    {{nameMsg}}
                 </mat-error>
             </mat-form-field>
 
@@ -26,9 +27,9 @@
                     <span>Nombre de usuario</span>
                 </mat-label>
 
-                <input type="email" matInput name="email" formControlName="email" placeholder="Ex. pat@example.com">
+                <input type="text" matInput name="username" formControlName="username" placeholder="Ex. konra">
                 <mat-error>
-                    {{emailMsg}}
+                    {{usernameMsg}}
                 </mat-error>
             </mat-form-field>
 
@@ -54,7 +55,7 @@
 
                 <input type="password" matInput name="password" formControlName="password">
                 <mat-error>
-                    {{emailMsg}}
+                    {{passwordMsg}}
                 </mat-error>
             </mat-form-field>
 
@@ -65,14 +66,13 @@
                     <span>Confirmar Contraseña</span>
                 </mat-label>
 
-                <input type="password" matInput name="password" formControlName="password">
+                <input type="password" matInput name="confirmPassword" formControlName="confirmPassword">
                 <mat-error>
-                    {{emailMsg}}
+                    {{confirmPasswordMsg}}
                 </mat-error>
             </mat-form-field>
 
-            <button type="submit" class="btn" mat-raised-button color="primary"
-                [disabled]="(registerForm.invalid)?true:false" (click)="login()">Registrarse</button>
+            <button type="submit" class="btn" mat-raised-button color="primary" [disabled]="(registerForm.invalid)?true:false" (click)="register()">Registrarse</button>
         </form>
 
         <p>¿Ya tienes cuenta? <span class="form__span" routerLink="/acceso/login">Inicia Sesión</span></p>

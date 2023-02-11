@@ -14,7 +14,7 @@ interface MenuOption {
 })
 export class NavMenuComponent {
   menuOptions: MenuOption[] = [
-    { name: 'Inicio', icon: 'home', url: '#' },
+    { name: 'Inicio', icon: 'home', url: 'inicio' },
     { name: 'Mis Contraseñas', icon: 'list_alt', url: '#' },
     { name: 'Modificar Perfil', icon: 'account_circle', url: '#' }
   ];

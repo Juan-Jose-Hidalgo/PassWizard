@@ -26,4 +26,16 @@ export class AuthService {
       );
   }
 
+  register(name: string, username: string, email: string, password: string) {
+    const url = `${this.urlBase}register`;
+    const body = { name, email, username, password };
+
+    return this.http.post<ResponseInterface>(url, body)
+      .pipe(
+        tap(res => {
+          if (res.status) localStorage.setItem('passToken', res.data.token!)
+        })
+      );
+  }
+
 }
