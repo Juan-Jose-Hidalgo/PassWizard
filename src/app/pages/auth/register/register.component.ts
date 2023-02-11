@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import Swal from 'sweetalert2';
+
 import { AuthService } from '../services/auth.service';
 import { FormValidatorService } from 'src/app/services/form-validator.service';
+import errorTranslate  from 'src/app/helpers/errorTranslate.helper';
 
 @Component({
   selector: 'app-register',
@@ -64,7 +67,15 @@ export class RegisterComponent {
     this.auth.register(name, username, email, password)
       .subscribe({
         next: (console.log),
-        error: (error => console.log(error.error))
+        error: (error => {
+          console.log(error);
+          const errorMsg = errorTranslate(error.error.data.error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: errorMsg,
+          })
+        })
       });
   }
 
