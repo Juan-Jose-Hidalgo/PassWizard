@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LoginComponent } from '../auth/login/login.component';
 
 interface MenuOption {
   name: string;
@@ -21,8 +20,4 @@ export class NavMenuComponent {
   ];
 
   constructor(public dialog: MatDialog) { }
-
-  loginDialog() {
-    this.dialog.open(LoginComponent, { minWidth: '25%' });
-  }
 }
