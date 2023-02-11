@@ -37,7 +37,7 @@
                 [disabled]="(loginForm.invalid)?true:false" (click)="login()">Iniciar sesión</button>
         </form>
 
-        <p>¿No tienes cuenta? <span class="form__span" (click)="registerDialog()">Regístrate</span></p>
+        <p>¿No tienes cuenta? <span class="form__span" routerLink="/acceso/registro">Regístrate</span></p>
 
     </div>
 </div>

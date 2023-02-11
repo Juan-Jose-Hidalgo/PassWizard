@@ -23,11 +23,6 @@
     }
 }
 
-.form__field {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
 .form__span {
     display: inline-block;
     color: map-get($map: var.$colors-map, $key: "accent-A400");
