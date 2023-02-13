@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TokenValidateGuard } from './guards/token-validate.guard';
 
 const routes: Routes = [
   {
@@ -11,8 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
   },
   {
-    path: 'mis-passwords/:id',
-    loadChildren: () => import('./pages/my-passwords/my-passwords.module').then(m => m.MyPasswordsModule)
+    path: 'mis-passwords/:username',
+    loadChildren: () => import('./pages/my-passwords/my-passwords.module').then(m => m.MyPasswordsModule),
+    canActivate: [TokenValidateGuard],
+    canLoad: [TokenValidateGuard]
   },
   { path: '**', redirectTo: 'inicio' }
 ];

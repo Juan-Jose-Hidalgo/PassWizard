@@ -1,9 +1,14 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+//* INTERFACES
+import { LogedUser } from 'src/app/models/loged-user.interface';
 import { PasswordList } from 'src/app/models/password-list.interface';
+
+//* SERVICES
+import { AuthService } from '../auth/services/auth.service';
 
 const DATA: PasswordList[] = [
   { name: 'Netflix', password: 'abc123.', category: 'streaming', created_at: '2023-02-10' },
@@ -37,8 +42,9 @@ const DATA: PasswordList[] = [
   templateUrl: './my-passwords.component.html',
   styleUrls: ['./my-passwords.component.scss']
 })
-export class MyPasswordsComponent implements AfterViewInit {
-  dataSource: MatTableDataSource<PasswordList>;
+export class MyPasswordsComponent implements AfterViewInit, OnInit {
+  dataSource!: MatTableDataSource<PasswordList>;
+  user!: LogedUser;
 
   columns = [
     {
@@ -73,9 +79,14 @@ export class MyPasswordsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
-    // Assign the data to the data source for the table to render
+  constructor(
+    private auth: AuthService
+  ) { }
+
+  ngOnInit(): void {
     this.dataSource = new MatTableDataSource(DATA);
+    this.user = this.auth.getUser;
+    console.log('Usuario', this.user);
   }
 
   ngAfterViewInit() {

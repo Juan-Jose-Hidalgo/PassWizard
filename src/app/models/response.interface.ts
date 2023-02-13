@@ -5,5 +5,7 @@ export interface ResponseInterface {
     data: {
         token?: string;
         user?: User;
+        userId?: number;
+        username?: string;
     }
 }
