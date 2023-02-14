@@ -5,7 +5,9 @@ import Swal from 'sweetalert2';
 
 import { AuthService } from '../services/auth.service';
 import { FormValidatorService } from 'src/app/services/form-validator.service';
-import errorTranslate  from 'src/app/helpers/errorTranslate.helper';
+import errorTranslate from 'src/app/helpers/errorTranslate.helper';
+import { Router } from '@angular/router';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-register',
@@ -25,8 +27,10 @@ export class RegisterComponent {
 
   constructor(
     private auth: AuthService,
+    private catService: CategoryService,
     private fb: FormBuilder,
-    private fv: FormValidatorService
+    private fv: FormValidatorService,
+    private router: Router
   ) { }
 
   //* Errors MSG
@@ -66,7 +70,12 @@ export class RegisterComponent {
     const { name, username, email, password } = this.registerForm.value;
     this.auth.register(name, username, email, password)
       .subscribe({
-        next: (console.log),
+        next: (_) => {
+          const username = this.auth.getUser.username;
+          const userId = this.auth.getUser.id;
+          this.catService.newCategory(userId, 'Sin Categoría').subscribe();
+          this.router.navigateByUrl(`mis-passwords/${username}`);
+        },
         error: (error => {
           console.log(error);
           const errorMsg = errorTranslate(error.error.data.error);

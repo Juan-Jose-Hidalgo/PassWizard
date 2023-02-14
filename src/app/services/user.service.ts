@@ -30,4 +30,5 @@ export class UserService {
         map(res => res.categories)
       );
   }
+
 }

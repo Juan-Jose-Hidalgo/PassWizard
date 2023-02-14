@@ -47,7 +47,13 @@ export class AuthService {
     return this.http.post<UserResponse>(url, body)
       .pipe(
         tap(res => {
-          if (res.status) localStorage.setItem('passToken', res.token!)
+          if (res.status) {
+            localStorage.setItem('passToken', res.token!)
+            this.logedUser = {
+              id: res.user.id,
+              username: res.user.username!
+            };
+          }
         })
       );
   }
