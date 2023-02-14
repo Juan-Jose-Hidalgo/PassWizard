@@ -1,9 +1,8 @@
-export interface User {
-    createdAt: string;
+import { ModelInterface } from "./model.interface";
+
+export interface User extends ModelInterface {
     email: string;
-    id: number;
     name: string;
     password: string;
-    updatedAt: string;
     username: string;
 }
