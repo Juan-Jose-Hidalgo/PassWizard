@@ -3,7 +3,7 @@ import { PasswordInterface } from "./password.interface";
 import { User } from "./user.interface";
 
 interface ResponseInterface {
-    status: string;
+    status?: string;
 }
 
 export interface CategoryResponse extends ResponseInterface {

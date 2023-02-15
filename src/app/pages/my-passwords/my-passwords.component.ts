@@ -1,16 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+
+//* ANGULAR MATERIAL
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+//* COMPONENTS
+import { NewPasswordComponent } from './new-password/new-password.component';
+
 //* INTERFACES
 import { Category } from 'src/app/models/category.type';
 import { LogedUser } from 'src/app/models/loged-user.interface';
+import { NewPassword } from 'src/app/models/new-password.interface';
+import { PasswordInterface } from 'src/app/models/password.interface';
 import { PasswordList } from 'src/app/models/password-list.interface';
-import { UserService } from 'src/app/services/user.service';
 
 //* SERVICES
 import { AuthService } from '../auth/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { decrypt } from 'src/app/helpers/crypto.helper';
 
 @Component({
   selector: 'app-my-passwords',
@@ -25,6 +34,7 @@ export class MyPasswordsComponent implements OnInit {
   userCategories: Category = {};
   hidePass = true;
 
+  //* Table Columns.
   columns = [
     {
       columnDef: 'name',
@@ -59,6 +69,7 @@ export class MyPasswordsComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
+    public dialog: MatDialog,
     private auth: AuthService,
     private userService: UserService
   ) { }
@@ -82,16 +93,7 @@ export class MyPasswordsComponent implements OnInit {
     this.userService.getUserPasswords(this.user.id).subscribe({
       next: (passwords => {
         passwords.forEach(pass => {
-          const categoryName = pass.categoryId;
-
-          //Create PasswordList object.
-          const passFile: PasswordList = {
-            category: this.userCategories[categoryName] || "",
-            created_at: pass.createdAt || "",
-            name: pass.name,
-            password: pass.password,
-            actions: ''
-          }
+          const passFile: PasswordList = this.toPasswordList(pass);
           this.DATA.push(passFile);
         });
         this.dataSource.data = this.DATA;
@@ -99,6 +101,18 @@ export class MyPasswordsComponent implements OnInit {
         this.dataSource.sort = this.sort;
       })
     })
+  }
+
+  toPasswordList(pass: PasswordInterface) {
+    const categoryName = pass.categoryId;
+    const passFile: PasswordList = {
+      category: this.userCategories[categoryName] || "",
+      created_at: pass.createdAt || "",
+      name: pass.name,
+      password: decrypt(pass.password),
+      actions: ''
+    };
+    return passFile;
   }
 
   getCategories() {
@@ -124,4 +138,28 @@ export class MyPasswordsComponent implements OnInit {
     const textIcon = (inputType === 'password') ? 'visibility_off' : 'visibility';
     event.target.innerHTML = textIcon;
   }
+
+  newPass() {
+    //Open dialog.
+    const dialogRef = this.dialog.open(NewPasswordComponent, {
+      minWidth: '50%',
+      data: { categories: this.userCategories, name: '', password: '' }
+    });
+
+    //Receive data and create new password when dialog is closed.
+    dialogRef.afterClosed().subscribe((result: NewPassword) => {
+      if (result) {
+        this.userService.newUserPassword(this.user.id, result.category!, result.name, result.password)
+          .subscribe({
+            next: (password => {
+              const passFile = this.toPasswordList(password);
+              this.DATA.push(passFile);
+              this.dataSource.data = this.DATA;
+            }),
+            error: console.log
+          })
+      }
+    });
+  }
 }
+

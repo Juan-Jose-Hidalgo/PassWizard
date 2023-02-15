@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { encrypt } from '../helpers/crypto.helper';
+import { PasswordInterface } from '../models/password.interface';
 import { CategoryResponse, PasswordResponse } from '../models/response.interface';
 
 @Injectable({
@@ -9,22 +11,30 @@ import { CategoryResponse, PasswordResponse } from '../models/response.interface
 })
 export class UserService {
 
-  private urlBase = `${environment.URL}users.routes/`;
+  private urlBase = `${environment.URL}`;
 
   constructor(
     private http: HttpClient
   ) { }
 
   getUserPasswords(id: number) {
-    const url = `${this.urlBase}${id}/get-passwords`;
+    const url = `${this.urlBase}users.routes/${id}/get-passwords`;
     return this.http.get<PasswordResponse>(url)
       .pipe(
         map(res => res.passwords)
       );
   }
 
+  newUserPassword(userId: number, categoryId: number, name: string, pass: string) {
+    const url = `${this.urlBase}passwords.routes/`;
+    pass = encrypt(pass);
+    const body = { userId, categoryId, name, pass };
+
+    return this.http.post<PasswordInterface>(url, body)
+  }
+
   getUserCategories(id: number) {
-    const url = `${this.urlBase}${id}/get-categories`;
+    const url = `${this.urlBase}users.routes/${id}/get-categories`;
     return this.http.get<CategoryResponse>(url)
       .pipe(
         map(res => res.categories)
