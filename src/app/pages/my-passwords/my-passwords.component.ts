@@ -27,6 +27,7 @@ import { decrypt } from 'src/app/helpers/crypto.helper';
   styleUrls: ['./my-passwords.component.scss']
 })
 export class MyPasswordsComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'password', 'category', 'created_at', 'actions'];
   dataSource = new MatTableDataSource<PasswordList>();
   DATA: PasswordList[] = [];
   passwords: any[] = [];
@@ -34,36 +35,36 @@ export class MyPasswordsComponent implements OnInit {
   userCategories: Category = {};
   hidePass = true;
 
-  //* Table Columns.
-  columns = [
-    {
-      columnDef: 'name',
-      header: 'Nombre',
-      cell: (element: PasswordList) => `${element.name}`,
-    },
-    {
-      columnDef: 'password',
-      header: 'Contraseña',
-      cell: (element: PasswordList) => `${element.password}`,
-    },
-    {
-      columnDef: 'category',
-      header: 'Categoría',
-      cell: (element: PasswordList) => `${element.category}`,
-    },
-    {
-      columnDef: 'created_at',
-      header: 'Fecha',
-      cell: (element: PasswordList) => `${element.created_at}`,
-    },
-    {
-      columnDef: 'actions',
-      header: '',
-      cell: null
-    }
-  ];
+  // //* Table Columns.
+  // columns = [
+  //   {
+  //     columnDef: 'name',
+  //     header: 'Nombre',
+  //     cell: (element: PasswordList) => `${element.name}`,
+  //   },
+  //   {
+  //     columnDef: 'password',
+  //     header: 'Contraseña',
+  //     cell: (element: PasswordList) => `${element.password}`,
+  //   },
+  //   {
+  //     columnDef: 'category',
+  //     header: 'Categoría',
+  //     cell: (element: PasswordList) => `${element.category}`,
+  //   },
+  //   {
+  //     columnDef: 'created_at',
+  //     header: 'Fecha',
+  //     cell: (element: PasswordList) => `${element.created_at}`,
+  //   },
+  //   {
+  //     columnDef: 'actions',
+  //     header: '',
+  //     cell: null
+  //   }
+  // ];
 
-  displayedColumns = this.columns.map(c => c.columnDef);
+  // displayedColumns = this.columns.map(c => c.columnDef);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -130,9 +131,11 @@ export class MyPasswordsComponent implements OnInit {
 
   passVisibility(event: any) {
     //Change input type.
-    let inputType = event.target.parentNode.children[0].type
+    console.log('Evento:', event);
+    console.log('Input:', event.target.parentNode.parentNode.children[0].type)
+    let inputType = event.target.parentNode.parentNode.children[0].type
     inputType = (inputType === 'password') ? 'text' : 'password';
-    event.target.parentNode.children[0].setAttribute('type', inputType);
+    event.target.parentNode.parentNode.children[0].setAttribute('type', inputType);
 
     //Change icon img.
     const textIcon = (inputType === 'password') ? 'visibility_off' : 'visibility';
