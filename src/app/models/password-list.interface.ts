@@ -4,4 +4,5 @@ export interface PasswordList {
     created_at: string;
     name: string;
     password: string;
+    passwordId: number;
 }

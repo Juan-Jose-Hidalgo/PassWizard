@@ -25,14 +25,6 @@ export class UserService {
       );
   }
 
-  newUserPassword(userId: number, categoryId: number, name: string, pass: string) {
-    const url = `${this.urlBase}passwords.routes/`;
-    pass = encrypt(pass);
-    const body = { userId, categoryId, name, pass };
-
-    return this.http.post<PasswordInterface>(url, body)
-  }
-
   getUserCategories(id: number) {
     const url = `${this.urlBase}users.routes/${id}/get-categories`;
     return this.http.get<CategoryResponse>(url)

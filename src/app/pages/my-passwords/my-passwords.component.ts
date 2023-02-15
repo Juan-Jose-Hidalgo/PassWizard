@@ -20,6 +20,7 @@ import { PasswordList } from 'src/app/models/password-list.interface';
 import { AuthService } from '../auth/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { decrypt } from 'src/app/helpers/crypto.helper';
+import { PasswordService } from 'src/app/services/password.service';
 
 @Component({
   selector: 'app-my-passwords',
@@ -35,43 +36,13 @@ export class MyPasswordsComponent implements OnInit {
   userCategories: Category = {};
   hidePass = true;
 
-  // //* Table Columns.
-  // columns = [
-  //   {
-  //     columnDef: 'name',
-  //     header: 'Nombre',
-  //     cell: (element: PasswordList) => `${element.name}`,
-  //   },
-  //   {
-  //     columnDef: 'password',
-  //     header: 'Contraseña',
-  //     cell: (element: PasswordList) => `${element.password}`,
-  //   },
-  //   {
-  //     columnDef: 'category',
-  //     header: 'Categoría',
-  //     cell: (element: PasswordList) => `${element.category}`,
-  //   },
-  //   {
-  //     columnDef: 'created_at',
-  //     header: 'Fecha',
-  //     cell: (element: PasswordList) => `${element.created_at}`,
-  //   },
-  //   {
-  //     columnDef: 'actions',
-  //     header: '',
-  //     cell: null
-  //   }
-  // ];
-
-  // displayedColumns = this.columns.map(c => c.columnDef);
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     public dialog: MatDialog,
     private auth: AuthService,
+    private passwordService: PasswordService,
     private userService: UserService
   ) { }
 
@@ -111,6 +82,7 @@ export class MyPasswordsComponent implements OnInit {
       created_at: pass.createdAt || "",
       name: pass.name,
       password: decrypt(pass.password),
+      passwordId: pass.id,
       actions: ''
     };
     return passFile;
@@ -131,8 +103,6 @@ export class MyPasswordsComponent implements OnInit {
 
   passVisibility(event: any) {
     //Change input type.
-    console.log('Evento:', event);
-    console.log('Input:', event.target.parentNode.parentNode.children[0].type)
     let inputType = event.target.parentNode.parentNode.children[0].type
     inputType = (inputType === 'password') ? 'text' : 'password';
     event.target.parentNode.parentNode.children[0].setAttribute('type', inputType);
@@ -152,7 +122,7 @@ export class MyPasswordsComponent implements OnInit {
     //Receive data and create new password when dialog is closed.
     dialogRef.afterClosed().subscribe((result: NewPassword) => {
       if (result) {
-        this.userService.newUserPassword(this.user.id, result.category!, result.name, result.password)
+        this.passwordService.newUserPassword(this.user.id, result.category!, result.name, result.password)
           .subscribe({
             next: (password => {
               const passFile = this.toPasswordList(password);
@@ -163,6 +133,21 @@ export class MyPasswordsComponent implements OnInit {
           })
       }
     });
+  }
+
+  deletePassword(id: number) {
+    this.passwordService.deleteUserPassword(id).subscribe({
+      next: (_) => {
+        const dataFilter = this.DATA.filter(password => password.passwordId !== id);
+        this.DATA = [...dataFilter];
+        this.dataSource.data = this.DATA;
+      },
+      error: console.log
+    })
+  }
+
+  updatePassword(id: number) {
+    console.log('Actualizar:', id)
   }
 }
 
