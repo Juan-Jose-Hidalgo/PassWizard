@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
 import { AuthService } from '../services/auth.service';
 import { FormValidatorService } from 'src/app/services/form-validator.service';
-import { RegisterComponent } from '../register/register.component';
 import errorTranslate from 'src/app/helpers/errorTranslate.helper';
 
 
@@ -25,7 +25,8 @@ export class LoginComponent {
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
-    private fv: FormValidatorService
+    private fv: FormValidatorService,
+    private router: Router
   ) { }
 
   //* Errors MSG
@@ -48,20 +49,21 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.invalid) return;
-
     const { email, password } = this.loginForm.value;
-    this.auth.login(email, password)
-      .subscribe({
-        next: (console.log),
-        error: (error => {
-          console.log(error);
-          const errorMsg = errorTranslate(error.error.data.error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: errorMsg,
-          })
+
+    this.auth.login(email, password).subscribe({
+      next: (_) => {
+        const username = this.auth.getUser.username;
+        this.router.navigateByUrl(`mis-passwords/${username}`);
+      },
+      error: (error => {
+        const errorMsg = errorTranslate(error.error.data.error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: errorMsg,
         })
-      });
+      })
+    });
   }
 }

@@ -1,11 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment.development';
+import { encrypt } from '../helpers/crypto.helper';
 import { checkedPassword } from '../models/checked-password.interface';
 import { DataPassword } from '../models/data-password.interface';
+import { PasswordInterface } from '../models/password.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PasswordService {
+
+  private urlBase = `${environment.URL}passwords.routes`;
 
   private variables = {
     num: '0123456789',
@@ -14,7 +20,9 @@ export class PasswordService {
     symb: '@#$%&)_@#$%&)_@#$%&)_'
   };
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   /**
    * Receives an object of type ```dataPassword``` with the necessary data to
@@ -127,5 +135,24 @@ export class PasswordService {
    */
   private unOrderedArray(arr: any[]) {
     return arr.sort(() => Math.random() - 0.5)
+  }
+
+  newUserPassword(userId: number, categoryId: number, name: string, pass: string) {
+    pass = encrypt(pass);
+    const body = { userId, categoryId, name, pass };
+
+    return this.http.post<PasswordInterface>(this.urlBase, body)
+  }
+
+  deleteUserPassword(id: number) {
+    const url = `${this.urlBase}/${id}`;
+    return this.http.delete(url);
+  }
+
+  updateUserPassword(id: number, name: string, pass: string, categoryId: number) {
+    const url = `${this.urlBase}/${id}`;
+    pass = encrypt(pass);
+    const body = { categoryId, name, pass }
+    return this.http.put(url, body);
   }
 }
