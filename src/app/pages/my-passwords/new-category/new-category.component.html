@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Crear Categoría</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="categoryForm" class="categoryForm">
+        <!--* Name block-->
+        <mat-form-field class="categoryForm__field">
+            <mat-label>
+                <mat-icon>alternate_email</mat-icon>
+                <span>Nombre</span>
+            </mat-label>
+
+            <input type="text" matInput name="name" formControlName="name" placeholder="Ex. Cursos">
+            <mat-error>El campo nombre es obligatorio.</mat-error>
+        </mat-form-field>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="newCategory()" color="primary"
+        [disabled]="(categoryForm.invalid)?true:false">Añadir</button>
+    <button mat-button mat-dialog-close color="warn">Cancelar</button>
+</mat-dialog-actions>
