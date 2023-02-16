@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
 //* ANGULAR MATERIAL
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -6,35 +6,39 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+
 //* COMPONENTS
 import { NewPasswordComponent } from './new-password/new-password.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 //* INTERFACES
-import { Category } from 'src/app/models/category.type';
+import { CategoryInterface } from 'src/app/models/category.interface';
 import { LogedUser } from 'src/app/models/loged-user.interface';
 import { NewPassword } from 'src/app/models/new-password.interface';
 import { PasswordInterface } from 'src/app/models/password.interface';
 import { PasswordList } from 'src/app/models/password-list.interface';
 
-//* SERVICES
+//* SERVICES & HELPERS
 import { AuthService } from '../auth/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
 import { decrypt } from 'src/app/helpers/crypto.helper';
 import { PasswordService } from 'src/app/services/password.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-my-passwords',
   templateUrl: './my-passwords.component.html',
-  styleUrls: ['./my-passwords.component.scss']
+  styleUrls: ['./my-passwords.component.scss'],
 })
 export class MyPasswordsComponent implements OnInit {
+  passwords: any[] = [];
+  user!: LogedUser;
+  userCategories: CategoryInterface[] = [];
+  hidePass = true;
+
+  //* Attributes for mat-table.
   displayedColumns: string[] = ['name', 'password', 'category', 'created_at', 'actions'];
   dataSource = new MatTableDataSource<PasswordList>();
   DATA: PasswordList[] = [];
-  passwords: any[] = [];
-  user!: LogedUser;
-  userCategories: Category = {};
-  hidePass = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -76,9 +80,10 @@ export class MyPasswordsComponent implements OnInit {
   }
 
   toPasswordList(pass: PasswordInterface) {
-    const categoryName = pass.categoryId;
+    //Extract name category from this.userCategories array.
+    const { name } = this.userCategories.find(cat => cat.id === pass.categoryId)!;
     const passFile: PasswordList = {
-      category: this.userCategories[categoryName] || "",
+      category: name,
       created_at: pass.createdAt || "",
       name: pass.name,
       password: decrypt(pass.password),
@@ -91,14 +96,18 @@ export class MyPasswordsComponent implements OnInit {
   getCategories() {
     this.userService.getUserCategories(this.user.id).subscribe({
       next: (categories => {
-        categories.forEach(category => {
-          const name = category.name.split('_').pop();
-          const cat: Category = {};
-          this.userCategories[category.id] = name;
+        this.userCategories = categories.map(cat => {
+          //Remove the numeric part of the name category.
+          cat.name = this.categoryName(cat);
+          return cat;
         });
       }),
       error: console.log
     })
+  }
+
+  categoryName(category: CategoryInterface) {
+    return category.name.split('_').pop()!;
   }
 
   passVisibility(event: any) {
@@ -135,6 +144,39 @@ export class MyPasswordsComponent implements OnInit {
     });
   }
 
+  updatePassword(id: number) {
+    //Prepare data for dialog.
+    const { category, password, name } = this.DATA.find(element => element.passwordId === id)!;
+    const categoryIndex = this.userCategories.findIndex(cat => cat.name === category)!;
+    const data = { categories: this.userCategories, categoryIndex, password, name };
+
+
+    //Open dialog.
+    const dialogRef = this.dialog.open(UpdatePasswordComponent, {
+      width: '90%',
+      maxWidth: '1000px',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe((result: NewPassword) => {
+      if (result) {
+        this.passwordService.updateUserPassword(id, result.name, result.password, result.category!).subscribe({
+          next: (_) => {
+            const index = this.DATA.findIndex(pass => pass.passwordId === id);
+            const category = this.userCategories.find(cat => cat.id === result.category)!;
+            const categoryName = this.categoryName(category);
+
+            //Update DATA.
+            this.DATA[index].category = categoryName;
+            this.DATA[index].name = result.name;
+            this.DATA[index].password = result.password;
+          },
+          error: console.log
+        })
+      }
+    });
+  }
+
   deletePassword(id: number) {
     this.passwordService.deleteUserPassword(id).subscribe({
       next: (_) => {
@@ -144,10 +186,6 @@ export class MyPasswordsComponent implements OnInit {
       },
       error: console.log
     })
-  }
-
-  updatePassword(id: number) {
-    console.log('Actualizar:', id)
   }
 }
 

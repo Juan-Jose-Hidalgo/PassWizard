@@ -148,4 +148,11 @@ export class PasswordService {
     const url = `${this.urlBase}/${id}`;
     return this.http.delete(url);
   }
+
+  updateUserPassword(id: number, name: string, pass: string, categoryId: number) {
+    const url = `${this.urlBase}/${id}`;
+    pass = encrypt(pass);
+    const body = { categoryId, name, pass }
+    return this.http.put(url, body);
+  }
 }
