@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
+import { CategoryResponse } from '../models/response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,6 @@ export class CategoryService {
 
   newCategory(userId: number, name: string) {
     const body = { name, userId }
-    return this.http.post(this.urlBase, body);
+    return this.http.post<CategoryResponse>(this.urlBase, body);
   }
 }

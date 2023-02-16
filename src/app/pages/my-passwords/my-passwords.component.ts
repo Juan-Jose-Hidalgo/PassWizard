@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 
 //* COMPONENTS
+import { NewCategoryComponent } from './new-category/new-category.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 
@@ -20,6 +21,7 @@ import { PasswordList } from 'src/app/models/password-list.interface';
 
 //* SERVICES & HELPERS
 import { AuthService } from '../auth/services/auth.service';
+import { CategoryService } from 'src/app/services/category.service';
 import { decrypt } from 'src/app/helpers/crypto.helper';
 import { PasswordService } from 'src/app/services/password.service';
 import { UserService } from 'src/app/services/user.service';
@@ -46,6 +48,7 @@ export class MyPasswordsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private auth: AuthService,
+    private catService: CategoryService,
     private passwordService: PasswordService,
     private userService: UserService
   ) { }
@@ -186,6 +189,26 @@ export class MyPasswordsComponent implements OnInit {
       },
       error: console.log
     })
+  }
+
+  newCategory() {
+    //Open dialog.
+    const dialogRef = this.dialog.open(NewCategoryComponent, {
+      width: '90%',
+      maxWidth: '1000px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.catService.newCategory(this.user.id, result.name).subscribe({
+          next: (res => {
+            res.categories[0].name = this.categoryName(res.categories[0]);
+            this.userCategories.push(res.categories[0]);
+          }),
+          error: console.log
+        })
+      }
+    });
   }
 }
 

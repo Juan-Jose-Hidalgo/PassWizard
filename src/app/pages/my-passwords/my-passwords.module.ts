@@ -7,13 +7,15 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { NewCategoryComponent } from './new-category/new-category.component';
 
 
 @NgModule({
   declarations: [
     MyPasswordsComponent,
     NewPasswordComponent,
-    UpdatePasswordComponent
+    UpdatePasswordComponent,
+    NewCategoryComponent
   ],
   imports: [
     CommonModule,
