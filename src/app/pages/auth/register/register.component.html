@@ -4,7 +4,7 @@
 
 
     <div class="container container--content">
-        <form [formGroup]="registerForm" class="form">
+        <form [formGroup]="registerForm" class="form" enctype="multipart/form-data">
 
             <!--* Name block-->
             <mat-form-field class="form__field">
@@ -72,7 +72,14 @@
                 </mat-error>
             </mat-form-field>
 
-            <button type="submit" class="btn" mat-raised-button color="primary" [disabled]="(registerForm.invalid)?true:false" (click)="register()">Registrarse</button>
+            <!--* IMG block-->
+            <div class="form__field form__field--img">
+                <label for="img">Imagen de perfil (Opcional)</label>
+                <input class="form__file" type="file" name="img" id="img" formControlName="img" (change)="imgSelec($event)">
+            </div>
+
+            <button type="submit" class="btn" mat-raised-button color="primary"
+                [disabled]="(registerForm.invalid)?true:false" (click)="register()">Registrarse</button>
         </form>
 
         <p>¿Ya tienes cuenta? <span class="form__span" routerLink="/acceso/login">Inicia Sesión</span></p>

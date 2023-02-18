@@ -19,11 +19,14 @@ export class RegisterComponent {
     name: [, Validators.required],
     username: [, Validators.required],
     email: [, [Validators.required, Validators.pattern(this.fv.emailPattern)]],
+    img: [],
     password: [, Validators.required],
     confirmPassword: [, Validators.required],
   }, {
     validators: [this.fv.comparePasswords('password', 'confirmPassword')]
   });
+
+  img!: File;
 
   constructor(
     private auth: AuthService,
@@ -64,11 +67,18 @@ export class RegisterComponent {
     return '';
   }
 
+  imgSelec(event: any): void {
+
+    if (event.target?.files && event.target.files[0]) this.img = <File>event.target.files[0];
+
+  }
+
   register() {
     if (this.registerForm.invalid) return;
 
+    console.log('Imagen', this.img);
     const { name, username, email, password } = this.registerForm.value;
-    this.auth.register(name, username, email, password)
+    this.auth.register(name, username, email, password, this.img)
       .subscribe({
         next: (_) => {
           const username = this.auth.getUser.username;
@@ -78,7 +88,7 @@ export class RegisterComponent {
         },
         error: (error => {
           console.log(error);
-          const errorMsg = errorTranslate(error.error.data.error);
+          const errorMsg = errorTranslate(error.error.message);
           Swal.fire({
             icon: 'error',
             title: 'Oops...',

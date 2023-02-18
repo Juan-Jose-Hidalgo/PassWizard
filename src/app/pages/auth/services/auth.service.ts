@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 
 import { LogedUser } from 'src/app/models/loged-user.interface';
 import { TokenResponse, UserResponse } from 'src/app/models/response.interface';
@@ -40,19 +40,31 @@ export class AuthService {
       );
   }
 
-  register(name: string, username: string, email: string, password: string) {
-    const url = `${this.urlBase}register`;
-    const body = { name, email, username, password };
+  /**
+   * Registers a new user on the server.
+   * 
+   * @param name The user's full name.
+   * @param username The desired username.
+   * @param email The user's email address.
+   * @param password The desired password.
+   * @param img The user's profile.
+   * @returns An Observable that emits the server response as a UserResponse object.
+   */
+  register(name: string, username: string, email: string, password: string, img: File): Observable<UserResponse> {
+    const formData = new FormData();
 
-    return this.http.post<UserResponse>(url, body)
+    formData.set('name', name);
+    formData.set('username', username);
+    formData.set('email', email);
+    formData.set('password', password);
+    formData.set('img', img);
+
+    return this.http.post<UserResponse>(`${this.urlBase}register`, formData)
       .pipe(
-        tap(res => {
-          if (res.status) {
-            localStorage.setItem('passToken', res.token!)
-            this.logedUser = {
-              id: res.user.id,
-              username: res.user.username!
-            };
+        tap(({ status, token, user }: UserResponse) => {
+          if (status) {
+            localStorage.setItem('passToken', token!);
+            this.logedUser = { id: user.id, username: user.username! };
           }
         })
       );
