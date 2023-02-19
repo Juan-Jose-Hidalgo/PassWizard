@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { handleError } from 'src/app/helpers/alert-error.helper';
 
 import { LogedUser } from 'src/app/models/loged-user.interface';
 import { TokenResponse, UserResponse } from 'src/app/models/response.interface';
@@ -66,9 +67,12 @@ export class AuthService {
             localStorage.setItem('passToken', token!);
             this.logedUser = { id: user.id, username: user.username! };
           }
-        })
+        }),
+        catchError(handleError)
       );
   }
+
+  
 
   validateToken() {
     const url = `${this.urlBase}renew-token`;

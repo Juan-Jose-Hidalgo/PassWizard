@@ -16,7 +16,7 @@
 
                 <input type="text" matInput name="name" formControlName="name" placeholder="Ex. Juan Hidalgo">
                 <mat-error>
-                    {{nameMsg}}
+                    {{getErrorMsg('name')}}
                 </mat-error>
             </mat-form-field>
 
@@ -29,7 +29,7 @@
 
                 <input type="text" matInput name="username" formControlName="username" placeholder="Ex. konra">
                 <mat-error>
-                    {{usernameMsg}}
+                    {{getErrorMsg('username')}}
                 </mat-error>
             </mat-form-field>
 
@@ -42,7 +42,7 @@
 
                 <input type="email" matInput name="email" formControlName="email" placeholder="Ex. pat@example.com">
                 <mat-error>
-                    {{emailMsg}}
+                    {{getErrorMsg('email')}}
                 </mat-error>
             </mat-form-field>
 
@@ -55,7 +55,7 @@
 
                 <input type="password" matInput name="password" formControlName="password">
                 <mat-error>
-                    {{passwordMsg}}
+                    {{getErrorMsg('password')}}
                 </mat-error>
             </mat-form-field>
 
@@ -68,18 +68,22 @@
 
                 <input type="password" matInput name="confirmPassword" formControlName="confirmPassword">
                 <mat-error>
-                    {{confirmPasswordMsg}}
+                    {{getErrorMsg('confirmPassword')}}
                 </mat-error>
             </mat-form-field>
 
             <!--* IMG block-->
             <div class="form__field form__field--img">
                 <label for="img">Imagen de perfil (Opcional)</label>
-                <input class="form__file" type="file" name="img" id="img" formControlName="img" (change)="imgSelec($event)">
+                <input class="form__file" type="file" name="img" id="img" formControlName="img"
+                    (change)="imgSelec($event)">
+                <mat-error>
+                    {{getErrorMsg('img')}}
+                </mat-error>
             </div>
 
             <button type="submit" class="btn" mat-raised-button color="primary"
-                [disabled]="(registerForm.invalid)?true:false" (click)="register()">Registrarse</button>
+                (click)="register()">Registrarse</button>
         </form>
 
         <p>¿Ya tienes cuenta? <span class="form__span" routerLink="/acceso/login">Inicia Sesión</span></p>
