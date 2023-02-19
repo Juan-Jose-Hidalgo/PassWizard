@@ -1,0 +1,29 @@
+<div class="container container--width">
+
+    <h1 class="h1">Perfil - {{user.username}}</h1>
+
+
+    <div class="container container--content">
+
+        <h2 class="title">Datos de Perfil</h2>
+
+        <div class="image">
+            <img class="image__img" [src]="urlImg+user.img" alt="">
+        </div>
+
+        <ul class="list">
+            <li class="list__li">Nombre: <span class="list__span">{{user.name}}</span></li>
+            <li class="list__li">Nombre de usuario: <span class="list__span">{{user.username}}</span></li>
+            <li class="list__li">Email: <span class="list__span">{{user.email}}</span></li>
+            <li class="list__li">Fecha de registro: <span class="list__span">{{user.createdAt | date:
+                    'dd-MM-YYYY'}}</span></li>
+        </ul>
+
+        <div class="actions">
+            <button type="submit" class="btn" mat-raised-button color="primary">Editar perfil</button>
+            <button type="submit" class="btn" mat-raised-button color="accent">Cerrar sesión</button>
+            <button type="submit" class="btn" mat-raised-button color="warn">Eliminar cuenta</button>
+        </div>
+
+    </div>
+</div>

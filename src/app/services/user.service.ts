@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { CategoryResponse, PasswordResponse } from '../models/response.interface';
+import { CategoryResponse, PasswordResponse, UserResponse } from '../models/response.interface';
+import { User } from '../models/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,20 @@ import { CategoryResponse, PasswordResponse } from '../models/response.interface
 export class UserService {
 
   private urlBase = `${environment.URL}`;
+  
 
   constructor(
     private http: HttpClient
   ) { }
+
+  getUser(id: number) {
+    const url = `${this.urlBase}users.routes`;
+    const headers = new HttpHeaders({ id: `${id}` });
+    return this.http.get<UserResponse>(url, { headers })
+      .pipe(
+        map(res => res.user)
+      );
+  }
 
   getUserPasswords(id: number) {
     const url = `${this.urlBase}users.routes/${id}/get-passwords`;
