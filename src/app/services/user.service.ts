@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { handleError } from '../helpers/alert-error.helper';
 import { CategoryResponse, PasswordResponse, UserResponse } from '../models/response.interface';
 import { User } from '../models/user.interface';
 
@@ -11,7 +12,7 @@ import { User } from '../models/user.interface';
 export class UserService {
 
   private urlBase = `${environment.URL}`;
-  
+
 
   constructor(
     private http: HttpClient
@@ -24,6 +25,14 @@ export class UserService {
       .pipe(
         map(res => res.user)
       );
+  }
+
+  updateUser(id: number, name: string, username: string, password: string) {
+    const url = `${this.urlBase}users.routes/${id}`;
+    const body = { name, username, password };
+    return this.http.put(url, body).pipe(
+      catchError(handleError)
+    )
   }
 
   getUserPasswords(id: number) {
