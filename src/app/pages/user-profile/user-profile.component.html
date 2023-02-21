@@ -1,29 +1,48 @@
 <div class="container container--width">
 
-    <h1 class="h1">Perfil - {{user.username}}</h1>
-
 
     <div class="container container--content">
 
-        <h2 class="title">Datos de Perfil</h2>
+        <h2 class="title">Datos de Perfil: <span class="title__span">{{user.username}}</span></h2>
 
-        <div class="image">
-            <img class="image__img" [src]="urlImg+user.img" alt="">
-        </div>
+        <div class="user-info">
 
-        <ul class="list">
-            <li class="list__li">Nombre: <span class="list__span">{{user.name}}</span></li>
-            <li class="list__li">Nombre de usuario: <span class="list__span">{{user.username}}</span></li>
-            <li class="list__li">Email: <span class="list__span">{{user.email}}</span></li>
-            <li class="list__li">Fecha de registro: <span class="list__span">{{user.createdAt | date:
-                    'dd-MM-YYYY'}}</span></li>
-        </ul>
+            <!--* IMAGE BLOCK-->
+            <div class="user-info__image">
+                <img class="user-info__image-img" [src]="urlImg+user.img" alt="Imagen de perfil del usuario">
+                <button mat-button color="accent" class="user-info__image-btn" (click)="updateImage()">Cambiar Imagen</button>
+            </div>
 
-        <div class="actions">
-            <button type="submit" class="btn" mat-raised-button color="primary" (click)="updateUser()">Editar perfil</button>
-            <button type="submit" class="btn" mat-raised-button color="accent">Cerrar sesión</button>
-            <button type="submit" class="btn" mat-raised-button color="warn">Eliminar cuenta</button>
+            <div class="user-info__details">
+                <!--* USER DETAILS-->
+                <ul class="user-info__list">
+                    <li class="user-info__list-item">
+                        Nombre: <span class="user-info__list-item-value">{{user.name}}</span>
+                    </li>
+                    <li class="user-info__list-item">
+                        Username: <span class="user-info__list-item-value">{{user.username}}</span>
+                    </li>
+                    <li class="user-info__list-item">
+                        Email: <span class="user-info__list-item-value">{{user.email}}</span>
+                    </li>
+                    <li class="user-info__list-item">
+                        Fecha de registro: <span class="user-info__list-item-value">{{user.createdAt | date:
+                            'dd-MM-YYYY'}}</span>
+                    </li>
+                </ul>
+
+                <!--* ACTION BUTTONS-->
+                <div class="user-info__actions">
+                    <button type="submit" class="btn" mat-raised-button color="primary" (click)="updateUser()">Editar
+                        perfil</button>
+                    <button type="submit" class="btn" mat-raised-button color="accent"
+                        (click)="updatePassword()">Cambiar contraseña</button>
+                    <button type="submit" class="btn" mat-raised-button color="warn">Eliminar cuenta</button>
+                </div>
+            </div>
+
         </div>
 
     </div>
+
 </div>

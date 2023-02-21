@@ -45,11 +45,8 @@ export class RegisterComponent {
     return this.fv.getErrorMsg(controlName, this.registerForm)
   }
 
-
   imgSelec(event: any): void {
-
     if (event.target?.files && event.target.files[0]) this.img = <File>event.target.files[0];
-
   }
 
 

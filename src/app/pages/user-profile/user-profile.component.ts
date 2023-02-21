@@ -9,6 +9,8 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 //* SERVICES
 import { AuthService } from '../auth/services/auth.service';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { UpdateUserPasswordComponent } from './update-user-password/update-user-password.component';
+import { UdateUserImgComponent } from './udate-user-img/udate-user-img.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -60,6 +62,30 @@ export class UserProfileComponent implements OnInit {
       this.userService.getUser(this.userId).subscribe(res => {
         this.user = res;
       })
+    })
+  }
+
+  updateImage() {
+    const dialog = this.dialog.open(UdateUserImgComponent, {
+      width: '90%',
+      maxWidth: '500px',
+      data: { id: this.userId, olderImg: this.user.img }
+    });
+
+    //After dialog closed.
+    dialog.afterClosed().subscribe((_) => {
+      this.userService.getUser(this.userId).subscribe(res => {
+        this.user = res;
+      })
+    });
+  }
+
+  updatePassword() {
+    //Open dialog.
+    this.dialog.open(UpdateUserPasswordComponent, {
+      width: '90%',
+      maxWidth: '500px',
+      data: { id: this.userId }
     })
   }
 
