@@ -6,11 +6,14 @@ import { UserService } from '../../services/user.service';
 //* ANGULAR MATERIAL
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+import Swal from 'sweetalert2';
+
 //* SERVICES
 import { AuthService } from '../auth/services/auth.service';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { UpdateUserPasswordComponent } from './update-user-password/update-user-password.component';
 import { UdateUserImgComponent } from './udate-user-img/udate-user-img.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -32,6 +35,7 @@ export class UserProfileComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
+    private router: Router,
     private userService: UserService
   ) { }
 
@@ -86,6 +90,29 @@ export class UserProfileComponent implements OnInit {
       width: '90%',
       maxWidth: '500px',
       data: { id: this.userId }
+    })
+  }
+
+  deleteAccount() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Perderás todas tus contraseñas y categorías",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3F51B5',
+      cancelButtonColor: '#f44336',
+      confirmButtonText: '¡Si, eliminar!',
+      cancelButtonText: 'Mejor no...',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.deleteAccout(`${this.userId}`).subscribe();
+        Swal.fire(
+          'Cuenta eliminada!',
+          'Se ha eliminado tu cuenta y toda la información relacionada.',
+          'success'
+        );
+        this.router.navigateByUrl('inicio');
+      }
     })
   }
 

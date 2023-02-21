@@ -72,7 +72,15 @@ export class AuthService {
       );
   }
 
-  
+  deleteAccout(id: string) {
+    const url = `${this.urlBase}${id}/delete-account`;
+    return this.http.delete(url).pipe(
+      tap((_) => {
+        localStorage.removeItem('passToken');
+      }),
+      catchError(handleError)
+    )
+  }
 
   validateToken() {
     const url = `${this.urlBase}renew-token`;
