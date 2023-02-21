@@ -17,6 +17,12 @@ const routes: Routes = [
     canActivate: [TokenValidateGuard],
     canLoad: [TokenValidateGuard]
   },
+  {
+    path: 'perfil/:username',
+    loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
+    canActivate: [TokenValidateGuard],
+    canLoad: [TokenValidateGuard]
+  },
   { path: '**', redirectTo: 'inicio' }
 ];
 

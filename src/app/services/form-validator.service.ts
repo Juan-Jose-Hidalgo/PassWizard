@@ -52,4 +52,46 @@ export class FormValidatorService {
       return null;
     }
   }
+
+  imageValidator(field: string) {
+    const allowedExtensions = ['jpg', 'jpeg', 'png'];
+    
+    return (control: AbstractControl): ValidationErrors | null => {
+
+      const file = control.get(field)?.value;
+      if (!file) return null;
+
+      const extension = file.split('.').pop()?.toLowerCase()!;
+      if (!allowedExtensions.includes(extension)) {
+        control.get(field)?.setErrors({ invalidImg: true });
+        return { invalidImg: true };
+      }
+      return null
+    }
+  }
+
+  /**
+   * Returns an error message for a given control name in a reactive form.
+   * 
+   * @param controlName The name of the control to retrieve the error message for.
+   * @returns The error message for the specified control, or an empty string if there are no errors.
+   */
+  getErrorMsg(controlName: string, form: FormGroup) {
+    // Get the errors for the specified control.
+    const error = form.get(controlName)?.errors;
+
+    // Define a dictionary mapping error keys to error messages.
+    const messages: Record<string, string> = {
+      required: `El campo ${controlName} es obligatorio`,
+      pattern: `Formato de ${controlName} no válido`,
+      diffPass: `Las contraseñas no coinciden`,
+      invalidImg: `Solo se permiten imágenes .jpeg, .jpg y .png`
+    };
+
+    // Map the error keys to their corresponding messages if they exist, and filter out any that are falsy.
+    return Object.keys(messages)
+      .map((key) => error?.[key] && messages[key])
+      .filter(Boolean)
+      .join('. ');
+  }
 }

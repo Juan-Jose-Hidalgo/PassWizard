@@ -8,6 +8,7 @@ import { FormValidatorService } from 'src/app/services/form-validator.service';
 import errorTranslate from 'src/app/helpers/errorTranslate.helper';
 import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
+import { handleError } from 'src/app/helpers/alert-error.helper';
 
 @Component({
   selector: 'app-register',
@@ -19,11 +20,17 @@ export class RegisterComponent {
     name: [, Validators.required],
     username: [, Validators.required],
     email: [, [Validators.required, Validators.pattern(this.fv.emailPattern)]],
+    img: [],
     password: [, Validators.required],
     confirmPassword: [, Validators.required],
   }, {
-    validators: [this.fv.comparePasswords('password', 'confirmPassword')]
+    validators: [
+      this.fv.comparePasswords('password', 'confirmPassword'),
+      this.fv.imageValidator('img')
+    ]
   });
+
+  img!: File;
 
   constructor(
     private auth: AuthService,
@@ -33,58 +40,27 @@ export class RegisterComponent {
     private router: Router
   ) { }
 
-  //* Errors MSG
-  get nameMsg() {
-    const error = this.registerForm.get('name')?.errors;
-    return (error?.['required']) ? 'El campo nombre es obligatorio' : '';
+
+  getErrorMsg(controlName: string) {
+    return this.fv.getErrorMsg(controlName, this.registerForm)
   }
 
-  get usernameMsg() {
-    const error = this.registerForm.get('username')?.errors;
-    return (error?.['required']) ? 'El campo nombre de usuario es obligatorio' : '';
+  imgSelec(event: any): void {
+    if (event.target?.files && event.target.files[0]) this.img = <File>event.target.files[0];
   }
 
-  get emailMsg() {
-    const error = this.registerForm.get('email')?.errors;
-    if (error?.['required']) return 'El campo email es obligatorio.';
-    if (error?.['pattern']) return 'Formato de correo no válido.';
-    return '';
-  }
-
-  get passwordMsg() {
-    const error = this.registerForm.get('password')?.errors;
-    if (error?.['required']) return 'El campo password es obligatorio.';
-    return '';
-  }
-
-  get confirmPasswordMsg() {
-    const error = this.registerForm.get('confirmPassword')?.errors;
-    if (error?.['required']) return 'Tienes que confirmar la contraseña.';
-    if (error?.['diffPass']) return 'Las contraseñas no coinciden';
-    return '';
-  }
 
   register() {
     if (this.registerForm.invalid) return;
 
     const { name, username, email, password } = this.registerForm.value;
-    this.auth.register(name, username, email, password)
-      .subscribe({
-        next: (_) => {
-          const username = this.auth.getUser.username;
-          const userId = this.auth.getUser.id;
-          this.catService.newCategory(userId, 'Sin Categoría').subscribe();
-          this.router.navigateByUrl(`mis-passwords/${username}`);
-        },
-        error: (error => {
-          console.log(error);
-          const errorMsg = errorTranslate(error.error.data.error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: errorMsg,
-          })
-        })
+
+    this.auth.register(name, username, email, password, this.img)
+      .subscribe((_) => {
+        const username = this.auth.getUser.username;
+        const userId = this.auth.getUser.id;
+        this.catService.newCategory(userId, 'Sin Categoría').subscribe();
+        this.router.navigateByUrl(`mis-passwords/${username}`);
       });
   }
 
