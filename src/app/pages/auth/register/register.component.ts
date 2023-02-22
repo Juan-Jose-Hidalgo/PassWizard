@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
 
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { FormValidatorService } from 'src/app/services/form-validator.service';
 import errorTranslate from 'src/app/helpers/errorTranslate.helper';
 import { Router } from '@angular/router';
