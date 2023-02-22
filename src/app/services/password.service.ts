@@ -109,13 +109,20 @@ export class PasswordService {
   }
 
   /**
-   * Receives an array by parameter and returns it unordered.
-   * 
-   * @param arr array to be disordered.
-   * @returns unordered array.
+   * Shuffles an array using the Fisher-Yates algorithm.
+   * @param arr The array to shuffle.
+   * @returns A new array with the same elements in a random order.
    */
-  private unOrderedArray(arr: any[]) {
-    return arr.sort(() => Math.random() - 0.5)
+  unOrderedArray(arr: any[]) {
+    const shuffledArray = [...arr]; // Create a copy of the original array.
+
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));// Select a random index.
+
+      // swap the elements at positions i and j using array destructuring
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
   }
 
   newUserPassword(userId: number, categoryId: number, name: string, pass: string) {
