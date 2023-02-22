@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { categoryName } from 'src/app/helpers/category-name.helper';
+import { CategoryInterface } from 'src/app/models/category.interface';
 import { DataPassword } from 'src/app/models/data-password.interface';
+import { NewPassword } from 'src/app/models/new-password.interface';
 import { FormValidatorService } from 'src/app/services/form-validator.service';
 import { PasswordService } from 'src/app/services/password.service';
+import { UserService } from 'src/app/services/user.service';
 import { ErrorPageComponent } from 'src/app/shared/error-page/error-page.component';
+import { AuthService } from '../auth/services/auth.service';
+import { NewPasswordComponent } from '../my-passwords/new-password/new-password.component';
 
 @Component({
   selector: 'app-home-page',
@@ -22,6 +29,8 @@ export class HomePageComponent implements OnInit {
   lengthError?: string | boolean;
   checkboxError?: string | boolean;
 
+  categories!: any[];
+
   // Password-image inputs
   image = '';
   urlImage = '';
@@ -33,13 +42,21 @@ export class HomePageComponent implements OnInit {
   badge = '';
 
   constructor(
+    public dialog: MatDialog,
+    private authService: AuthService,
     private fv: FormValidatorService,
     private pass: PasswordService,
-    public dialogAlert: MatDialog
+    private router: Router,
+    private us: UserService,
   ) { };
 
   ngOnInit(): void {
     this.generatePassword();
+    if (this.user.id >= 0) this.getCategories();
+  }
+
+  get user() {
+    return this.authService.getUser;
   }
 
   /**
@@ -110,11 +127,38 @@ export class HomePageComponent implements OnInit {
    * Generate an alert error.
    */
   generateAlert() {
-    this.dialogAlert.open(ErrorPageComponent, {
+    this.dialog.open(ErrorPageComponent, {
       data: {
         lengthError: this.lengthError,
         checkboxError: this.checkboxError
       }
     });
+  }
+
+  savePassword() {
+    const dialogRef = this.dialog.open(NewPasswordComponent, {
+      minWidth: '50%',
+      data: { categories: this.categories, name: '', password: this.password }
+    });
+
+    //Receive data and create new password when dialog is closed.
+    dialogRef.afterClosed().subscribe((result: NewPassword) => {
+      if (result) {
+        this.pass.newUserPassword(this.user.id, result.category!, result.name, result.password)
+          .subscribe({
+            next: (_) => this.router.navigateByUrl('mis-passwords'),
+            error: console.log
+          })
+      }
+    });
+  }
+
+  getCategories() {
+    this.us.getUserCategories(this.user.id).subscribe(categories => {
+      this.categories = categories.map(category => {
+        category.name = categoryName(category);
+        return category;
+      })
+    })
   }
 }

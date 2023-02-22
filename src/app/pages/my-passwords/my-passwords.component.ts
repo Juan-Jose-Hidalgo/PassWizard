@@ -25,6 +25,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { decrypt } from 'src/app/helpers/crypto.helper';
 import { PasswordService } from 'src/app/services/password.service';
 import { UserService } from 'src/app/services/user.service';
+import { categoryName } from 'src/app/helpers/category-name.helper';
 
 @Component({
   selector: 'app-my-passwords',
@@ -103,16 +104,13 @@ export class MyPasswordsComponent implements OnInit {
       next: (categories => {
         this.userCategories = categories.map(cat => {
           //Remove the numeric part of the name category.
-          cat.name = this.categoryName(cat);
+          cat.name = categoryName(cat);
           return cat;
         });
+        console.log('Categorias:', this.userCategories);
       }),
       error: console.log
     })
-  }
-
-  categoryName(category: CategoryInterface) {
-    return category.name.split('_').pop()!;
   }
 
   passVisibility(event: any) {
@@ -169,10 +167,10 @@ export class MyPasswordsComponent implements OnInit {
           next: (_) => {
             const index = this.DATA.findIndex(pass => pass.passwordId === id);
             const category = this.userCategories.find(cat => cat.id === result.category)!;
-            const categoryName = this.categoryName(category);
+            const name = categoryName(category);
 
             //Update DATA.
-            this.DATA[index].category = categoryName;
+            this.DATA[index].category = name;
             this.DATA[index].name = result.name;
             this.DATA[index].password = result.password;
           },
@@ -204,7 +202,7 @@ export class MyPasswordsComponent implements OnInit {
       if (result) {
         this.catService.newCategory(this.user.id, result.name).subscribe({
           next: (res => {
-            res.categories[0].name = this.categoryName(res.categories[0]);
+            res.categories[0].name = categoryName(res.categories[0]);
             this.userCategories.push(res.categories[0]);
           }),
           error: console.log

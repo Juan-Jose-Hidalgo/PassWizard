@@ -11,12 +11,12 @@ export class NewPasswordComponent {
   categorySelected = this.data.categories[0];
 
   categoryForm: FormGroup = this.fb.group({
-    category: [this.categorySelected.id, Validators.required],
+    category: [, Validators.required],
     name: [this.data.name, Validators.required],
     password: [this.data.password]
   });
 
-  result: any = { name: this.data.name, password: this.data.password, category: this.categorySelected.id }
+  result!: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
