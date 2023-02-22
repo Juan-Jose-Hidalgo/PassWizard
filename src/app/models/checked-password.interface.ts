@@ -1,4 +1,4 @@
-export interface checkedPassword {
+interface checkedPassword {
     url: string;
     img: string;
     author: string;
