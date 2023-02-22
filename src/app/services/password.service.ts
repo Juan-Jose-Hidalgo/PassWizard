@@ -80,31 +80,12 @@ export class PasswordService {
    * @param checks ```number``` Number of options marked by the user.
    * @returns ```checkedPassword``` Object with password info.
    */
-  chekStrongPassword(password: string, checks: number): checkedPassword {
-    if (password.length >= 14 && checks === 4) {
-      return {
-        url: 'https://www.freepik.com/free-vector/stone-castle-fortress-cartoon-sticker_18180113.htm#query=castle%20tower&position=32&from_view=keyword',
-        author: 'Imagen creada por brgfx en Freepik',
-        img: 'assets/img/fuerte.png',
-        msg: 'fuerte'
-      }
-    }
+  chekStrongPassword(password: string, checks: number): string {
+    if (password.length >= 14 && checks === 4) return 'fuerte';
 
-    if (password.length >= 11 && checks >= 3) {
-      return {
-        url: 'https://www.freepik.com/free-vector/stone-castle-fortress-cartoon-sticker_19703624.htm?query=castle tower',
-        author: 'Imagen creada por brgfx en Freepik',
-        img: 'assets/img/media.png',
-        msg: 'media'
-      }
-    }
+    if (password.length >= 11 && checks >= 3) return 'media';
 
-    return {
-      url: 'https://www.freepik.com/free-vector/princess-castle-tower-white-background_18616302.htm#query=castle%20tower&position=7&from_view=keyword',
-      author: 'Imagen creada por brgfx en Freepik',
-      img: 'assets/img/debil.png',
-      msg: 'débil'
-    };
+    return 'débil';
   }
 
   /**

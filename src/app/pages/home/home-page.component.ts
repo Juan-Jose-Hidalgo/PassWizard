@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { categoryName } from 'src/app/helpers/category-name.helper';
-import { CategoryInterface } from 'src/app/models/category.interface';
+import { IMG_DATA } from 'src/app/helpers/password-image-data.helper';
 import { DataPassword } from 'src/app/models/data-password.interface';
 import { NewPassword } from 'src/app/models/new-password.interface';
 import { FormValidatorService } from 'src/app/services/form-validator.service';
 import { PasswordService } from 'src/app/services/password.service';
 import { UserService } from 'src/app/services/user.service';
 import { ErrorPageComponent } from 'src/app/shared/error-page/error-page.component';
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { NewPasswordComponent } from '../my-passwords/new-password/new-password.component';
 
 @Component({
@@ -73,11 +73,11 @@ export class HomePageComponent implements OnInit {
       this.password = password;
 
       //Set img info and password strenght.
-      const { url, img, author, msg } = this.pass.chekStrongPassword(this.password, checks);
-      this.passwordStrength = msg;
-      this.image = img;
-      this.urlImage = url;
-      this.author = author;
+      const strenght = this.pass.chekStrongPassword(this.password, checks);
+      this.passwordStrength = strenght;
+      this.image = IMG_DATA[strenght].img;
+      this.urlImage = IMG_DATA[strenght].url;
+      this.author = IMG_DATA[strenght].author;
 
       //Set badge class.
       this.badge = this.setBadgeClass();

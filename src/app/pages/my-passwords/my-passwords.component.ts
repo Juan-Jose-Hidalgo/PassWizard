@@ -20,7 +20,7 @@ import { PasswordInterface } from 'src/app/models/password.interface';
 import { PasswordList } from 'src/app/models/password-list.interface';
 
 //* SERVICES & HELPERS
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { decrypt } from 'src/app/helpers/crypto.helper';
 import { PasswordService } from 'src/app/services/password.service';

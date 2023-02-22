@@ -9,7 +9,7 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import Swal from 'sweetalert2';
 
 //* SERVICES
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { UpdateUserPasswordComponent } from './update-user-password/update-user-password.component';
 import { UdateUserImgComponent } from './udate-user-img/udate-user-img.component';

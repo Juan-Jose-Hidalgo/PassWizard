@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 //* SERVICES
 import { FormValidatorService } from 'src/app/services/form-validator.service';
 import { UserService } from 'src/app/services/user.service';
-import { AuthService } from '../../auth/services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-update-user',
