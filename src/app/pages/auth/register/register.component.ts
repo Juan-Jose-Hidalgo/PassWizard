@@ -57,10 +57,9 @@ export class RegisterComponent {
 
     this.auth.register(name, username, email, password, this.img)
       .subscribe((_) => {
-        const username = this.auth.getUser.username;
         const userId = this.auth.getUser.id;
         this.catService.newCategory(userId, 'Sin Categoría').subscribe();
-        this.router.navigateByUrl(`mis-passwords/${username}`);
+        this.router.navigateByUrl('mis-passwords');
       });
   }
 

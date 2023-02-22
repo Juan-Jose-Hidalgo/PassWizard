@@ -15,15 +15,18 @@ import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 import { SocialNavComponent } from './shared/social-nav/social-nav.component';
 import { AuthModule } from './pages/auth/auth.module';
 import { UserProfileModule } from './pages/user-profile/user-profile.module';
+import { UserMenuComponent } from './shared/nav-menu/user-menu/user-menu.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
+    UserMenuComponent,
     ErrorPageComponent,
     FooterComponent,
     SocialNavComponent,
+    UserMenuComponent,
   ],
   imports: [
     AppRoutingModule,

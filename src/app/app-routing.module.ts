@@ -12,13 +12,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
   },
   {
-    path: 'mis-passwords/:username',
+    path: 'mis-passwords',
     loadChildren: () => import('./pages/my-passwords/my-passwords.module').then(m => m.MyPasswordsModule),
     canActivate: [TokenValidateGuard],
     canLoad: [TokenValidateGuard]
   },
   {
-    path: 'perfil/:username',
+    path: 'perfil',
     loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
     canActivate: [TokenValidateGuard],
     canLoad: [TokenValidateGuard]

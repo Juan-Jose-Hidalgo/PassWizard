@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 //* SERVICES
 import { FormValidatorService } from 'src/app/services/form-validator.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-update-user',
@@ -22,6 +23,7 @@ export class UpdateUserComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private authService: AuthService,
     private fb: FormBuilder,
     private fv: FormValidatorService,
     private us: UserService
@@ -38,6 +40,9 @@ export class UpdateUserComponent {
     }
     const { name, username, email } = this.updateForm.value;
 
-    this.us.updateUser(this.data.userId, name, username, email).subscribe()
+    this.us.updateUser(this.data.userId, name, username, email).subscribe(res=>{
+      this.authService.setUser(res.user);
+      console.log(this.authService.getUser)
+    })
   }
 }
