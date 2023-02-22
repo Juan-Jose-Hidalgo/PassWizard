@@ -1,0 +1,26 @@
+<!--* Menu trigger button element -->
+<button class="button button--menu" [matMenuTriggerFor]="menu">
+    <!-- Icon image for menu trigger button -->
+    <img class="button__img" [src]="urlImg+user.img" alt="Imagen de perfil del usuario">
+    <span class="button__username">{{user.username}}</span>
+</button>
+
+<!--* Dropdown menu element -->
+<mat-menu #menu="matMenu">
+    <!--* Menú elements-->
+    <nav>
+        <ul class="menu">
+            <li *ngFor="let option of menuOptions" class="menu__element">
+                <a [routerLink]="option.url" class="menu__link">
+                    <mat-icon>{{option.icon}}</mat-icon>
+                    <span class="menu__text">{{option.name}}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <button mat-button color="warn" class="menu__button" (click)="logOut()">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar sesión</span>
+    </button>
+</mat-menu>

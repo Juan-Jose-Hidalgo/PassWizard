@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
-interface MenuOption {
-  name: string;
-  icon: string;
-  url: string;
-}
+import { Subscription } from 'rxjs';
+import { LogedUser } from 'src/app/models/loged-user.interface';
+import { AuthService } from 'src/app/pages/auth/services/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavMenuComponent {
-  menuOptions: MenuOption[] = [
-    { name: 'Inicio', icon: 'home', url: 'inicio' },
-    { name: 'Mis Contraseñas', icon: 'list_alt', url: '#' },
-    { name: 'Modificar Perfil', icon: 'account_circle', url: '#' }
-  ];
+export class NavMenuComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private authService: AuthService
+  ) { }
+
+  get user() {
+    return this.authService.getUser;
+  }
+
+  ngOnInit(): void {
+
+  }
 }

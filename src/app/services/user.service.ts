@@ -33,7 +33,8 @@ export class UserService {
     const url = `${this.urlBase}users.routes/${id}`;
     const body = { name, username, password };
 
-    return this.http.put(url, body).pipe(
+    return this.http.put<UserResponse>(url, body).pipe(
+      tap(console.log),
       catchError(handleError)
     )
   }
@@ -44,7 +45,7 @@ export class UserService {
     formData.set('img', img);
     formData.set('olderImg', olderImg);
 
-    return this.http.patch(url, formData).pipe(
+    return this.http.patch<UserResponse>(url, formData).pipe(
       catchError(handleError)
     )
   }

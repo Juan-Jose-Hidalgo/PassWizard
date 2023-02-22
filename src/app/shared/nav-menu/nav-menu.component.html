@@ -1,46 +1,37 @@
-<mat-sidenav-container fullscreen>
-
-    <mat-sidenav #sidenav mode="push">
-        <!--* Vertical toolbar-->
-        <mat-toolbar color="primary" class="menu__toolbar">
-            <h1>Menú</h1>
-            <button mat-mini-fab color="accent" class="btn--close" (click)="sidenav.toggle()">
-                <mat-icon class="icon--close">close</mat-icon>
-            </button>
-        </mat-toolbar>
-
-        <mat-list>
-            <!--* Menú elements-->
-            <nav>
-                <a mat-list-item *ngFor="let option of menuOptions" [routerLink]="option.url" class="menu__a">
-                    <mat-icon matListItemIcon>{{option.icon}}</mat-icon>
-                    <span class="menu__span" matListItemTitle>{{option.name}}</span>
-                </a>
-            </nav>
-        </mat-list>
-
-    </mat-sidenav>
+<mat-sidenav-container>
 
     <!--* Horizontal toolbar-->
-    <mat-toolbar color="primary" class="menu__toolbar">
-        <button mat-mini-fab color="primary" (click)="sidenav.toggle()">
-            <mat-icon>menu</mat-icon>
-        </button>
+    <mat-toolbar color="primary" class="header">
 
-        <a href="#" class="menu__title">Gestor de Contraseñas</a>
+        <header class="header__container">
+            <!--* Logo-->
+            <div class="header__left">
+                <img class="header__icon" src="../../../assets/img/password.png" alt="Icono de candado">
+                <a [routerLink]="['/inicio']" class="header__title">PassWizard</a>
+            </div>
 
-        <button mat-raised-button routerLink="acceso">
-            <mat-icon>login</mat-icon>
-            Login
-        </button>
+            <!--* Login & User-->
+            <div class="header__right">
+                <ng-container *ngIf="user.id > 0;else login">
+                    <app-user-menu [user]="user"></app-user-menu>
+                </ng-container>
+
+                <ng-template #login>
+                    <button mat-raised-button routerLink="acceso">
+                        <mat-icon class="header__icon header__icon--login">login</mat-icon>
+                        Login
+                    </button>
+                </ng-template>
+            </div>
+        </header>
 
     </mat-toolbar>
 
-    <main>
+    <main class="main">
         <router-outlet></router-outlet>
     </main>
 
-    <footer>
-        <app-footer></app-footer>
+    <footer class="footer">
+        <app-footer class="footer__content"></app-footer>
     </footer>
 </mat-sidenav-container>

@@ -52,10 +52,7 @@ export class LoginComponent {
     const { email, password } = this.loginForm.value;
 
     this.auth.login(email, password).subscribe({
-      next: (_) => {
-        const username = this.auth.getUser.username;
-        this.router.navigateByUrl(`mis-passwords/${username}`);
-      },
+      next: (_) => this.router.navigateByUrl('mis-passwords'),
       error: (error => {
         const errorMsg = errorTranslate(error.error.data.error);
         Swal.fire({

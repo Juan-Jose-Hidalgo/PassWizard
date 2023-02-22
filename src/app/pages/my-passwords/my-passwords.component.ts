@@ -33,7 +33,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MyPasswordsComponent implements OnInit {
   passwords: any[] = [];
-  user!: LogedUser;
   userCategories: CategoryInterface[] = [];
   hidePass = true;
 
@@ -53,8 +52,11 @@ export class MyPasswordsComponent implements OnInit {
     private userService: UserService
   ) { }
 
+  get user() {
+    return this.auth.getUser;
+  }
+
   ngOnInit(): void {
-    this.user = this.auth.getUser;
     this.getCategories();
     this.getPasswordsList();
   }

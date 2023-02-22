@@ -21,15 +21,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-  user: User = {
-    email: '',
-    id: -1,
-    img: '',
-    name: '',
-    password: '',
-    username: ''
-  }
-  userId!: number;
+ 
   urlImg = environment.URL;
 
   constructor(
@@ -39,11 +31,12 @@ export class UserProfileComponent implements OnInit {
     private userService: UserService
   ) { }
 
+  get user(){
+    return this.authService.getUser;
+  }
+
   ngOnInit(): void {
-    this.userId = this.authService.getUser.id;
-    this.userService.getUser(this.userId).subscribe(res => {
-      this.user = res;
-    })
+ 
   }
 
   updateUser() {
@@ -52,7 +45,7 @@ export class UserProfileComponent implements OnInit {
       username: this.user.username,
       email: this.user.email,
       password: this.user.password,
-      userId: this.userId
+      userId: this.user.id
     }
     //Open dialog.
     const dialog = this.dialog.open(UpdateUserComponent, {
@@ -62,26 +55,26 @@ export class UserProfileComponent implements OnInit {
     });
 
     //After dialog closed.
-    dialog.afterClosed().subscribe((_) => {
-      this.userService.getUser(this.userId).subscribe(res => {
-        this.user = res;
-      })
-    })
+    // dialog.afterClosed().subscribe((_) => {
+    //   this.userService.getUser(this.userId).subscribe(res => {
+    //     this.user = res;
+    //   })
+    // })
   }
 
   updateImage() {
     const dialog = this.dialog.open(UdateUserImgComponent, {
       width: '90%',
       maxWidth: '500px',
-      data: { id: this.userId, olderImg: this.user.img }
+      data: { id: this.user.id, olderImg: this.user.img }
     });
 
     //After dialog closed.
-    dialog.afterClosed().subscribe((_) => {
-      this.userService.getUser(this.userId).subscribe(res => {
-        this.user = res;
-      })
-    });
+    // dialog.afterClosed().subscribe((_) => {
+    //   this.userService.getUser(this.userId).subscribe(res => {
+    //     this.user = res;
+    //   })
+    // });
   }
 
   updatePassword() {
@@ -89,7 +82,7 @@ export class UserProfileComponent implements OnInit {
     this.dialog.open(UpdateUserPasswordComponent, {
       width: '90%',
       maxWidth: '500px',
-      data: { id: this.userId }
+      data: { id: this.user.id }
     })
   }
 
@@ -105,7 +98,7 @@ export class UserProfileComponent implements OnInit {
       cancelButtonText: 'Mejor no...',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.authService.deleteAccout(`${this.userId}`).subscribe();
+        this.authService.deleteAccout(`${this.user.id}`).subscribe();
         Swal.fire(
           'Cuenta eliminada!',
           'Se ha eliminado tu cuenta y toda la información relacionada.',

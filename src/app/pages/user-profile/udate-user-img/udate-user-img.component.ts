@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 //* SERVICES
 import { FormValidatorService } from 'src/app/services/form-validator.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-udate-user-img',
@@ -24,6 +25,7 @@ export class UdateUserImgComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private authService: AuthService,
     private fb: FormBuilder,
     private fv: FormValidatorService,
     private us: UserService
@@ -48,6 +50,8 @@ export class UdateUserImgComponent {
       return;
     }
 
-    this.us.updateUserImg(this.data.id, this.img, this.data.olderImg).subscribe();
+    this.us.updateUserImg(this.data.id, this.img, this.data.olderImg).subscribe(res =>{
+      this.authService.setUser(res.user);
+    });
   }
 }
