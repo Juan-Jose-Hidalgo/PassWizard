@@ -1,16 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { categoryName } from 'src/app/helpers/category-name.helper';
-import { IMG_DATA } from 'src/app/helpers/password-image-data.helper';
+
+//* THIRD PARTY LIBRARIES.
+import Swal from 'sweetalert2';
+
+//* COMPONENT.
+import { NewPasswordComponent } from '../my-passwords/new-password/new-password.component';
+
+//* INTERFACES.
 import { DataPassword } from 'src/app/models/data-password.interface';
 import { NewPassword } from 'src/app/models/new-password.interface';
+
+//* HELPER FUNCTIONS.
+import { categoryName } from 'src/app/helpers/category-name.helper';
+import { IMG_DATA } from 'src/app/helpers/password-image-data.helper';
+import { strengthClassMap } from 'src/app/helpers/set-badget-class.helper';
+
+//* SERVICES
+import { AuthService } from '../../services/auth.service';
 import { FormValidatorService } from 'src/app/services/form-validator.service';
 import { PasswordService } from 'src/app/services/password.service';
 import { UserService } from 'src/app/services/user.service';
-import { ErrorPageComponent } from 'src/app/shared/error-page/error-page.component';
-import { AuthService } from '../../services/auth.service';
-import { NewPasswordComponent } from '../my-passwords/new-password/new-password.component';
 
 @Component({
   selector: 'app-home-page',
@@ -60,42 +71,50 @@ export class HomePageComponent implements OnInit {
   }
 
   /**
-   * Checks for errors in the data required to create the password.
-   * - If there are errors: invoke the function ```generateAlert()``` to display an error alert.
-   * - If there are no errors: invoke the function ```generatePassword()```.
-   * Then invoke the function ```checkStrongPassword()``` to check the password strength and generate the data.
+   * Generates a new password and sets its info. If there are errors in the inputs or checkboxes,
+   * it generates an alert instead.
    */
   generatePassword() {
-    if (this.checkErrors()) this.generateAlert(); //Check errors on inputs an checkboxes.
-    else {
-      //Generate password.
-      const { password, checks } = this.pass.generatePassword(this.data);
-      this.password = password;
-
-      //Set img info and password strenght.
-      const strenght = this.pass.chekStrongPassword(this.password, checks);
-      this.passwordStrength = strenght;
-      this.image = IMG_DATA[strenght].img;
-      this.urlImage = IMG_DATA[strenght].url;
-      this.author = IMG_DATA[strenght].author;
-
-      //Set badge class.
-      this.badge = this.setBadgeClass();
-    }
-  }
-
-  setBadgeClass() {
-    if (this.passwordStrength === 'débil') return 'pass-gen__badget pass-gen__badget--weak';
-    else if (this.passwordStrength === 'media') return 'pass-gen__badget pass-gen__badget--medium';
-    else if (this.passwordStrength === 'fuerte') return 'pass-gen__badget pass-gen__badget--strong';
-    else return 'pass-gen__badget';
+    this.checkErrors(this.data) ? this.generateAlert() : this.setPasswordInfo();
   }
 
   /**
-   * Increases or decreases the length of the password depending on the parameter ```num```.
+   * Sets the info for a generated password, including its strength, image, and badge class.
+   */
+  setPasswordInfo() {
+    //Generate password.
+    const { password, checks } = this.pass.generatePassword(this.data);
+    this.password = password;
+
+    //Set img info and password strength.
+    const strength = this.pass.chekStrongPassword(this.password, checks);
+    this.passwordStrength = strength;
+    this.image = IMG_DATA[strength].img;
+    this.urlImage = IMG_DATA[strength].url;
+    this.author = IMG_DATA[strength].author;
+
+    //Set badge class.
+    this.badge = this.setBadgeClass();
+  }
+
+  /**
+   * Returns the CSS class corresponding to the current password strength.
+   * If the current password strength is not recognized, returns the default CSS class.
    * 
-   * @param num ```number```
-   * @returns ```void```
+   * The ```strengthClassMap``` object is defined in the set-badge-class.helper.ts file, 
+   * which is located in the ```helpers directory``` and contains the mapping between password strength and CSS classes.
+   * 
+   * @returns The CSS class corresponding to the current password strength.
+   */
+  setBadgeClass() {
+    return strengthClassMap[this.passwordStrength] || 'pass-gen__badget';
+  }
+
+
+  /**
+   * Sets the length of the password by adding or subtracting a given number.
+   * The password length must be between 8 and 16 characters, inclusive.
+   * @param num The number to add or subtract from the password length.
    */
   setValue(num: number): void {
     if (this.data.length + num < 8 || this.data.length + num > 16) return;
@@ -107,58 +126,69 @@ export class HomePageComponent implements OnInit {
   }
 
   /**
-   * Checks for errors in the data and gives the corresponding value to the variables that store the errors.
+   * Checks if the given password configuration is valid.
    * 
-   * Returns true/false depending on errors.
-   * 
-   * @returns ```boolean```
+   * @param data The password configuration to check.
+   * @returns `true` if the configuration is valid, `false` otherwise.
    */
-  checkErrors() {
-    const checkBox = this.fv.checkboxIsValid(this.data);
-    const length = this.fv.lengthIsValid(this.data.length);
+  checkErrors(data: DataPassword) {
+    const checkBoxes = [data.lowerCase, data.upperCase, data.numbers, data.symbols];
+    const checkBox = checkBoxes.some(cb => cb);
+    const length = this.fv.lengthIsValid(data.length);
 
-    this.checkboxError = (!checkBox) ? 'Debes indicar al menos una opción para los caracteres.' : false;
-    this.lengthError = (!length) ? 'Tienes que escoger una longitud entre 8 y 16 caracteres.' : false;
+    this.checkboxError = !checkBox ? 'Debes indicar al menos una opción para los caracteres.' : false;
+    this.lengthError = !length ? 'Tienes que escoger una longitud entre 8 y 16 caracteres.' : false;
 
-    return (!checkBox || !length) ? true : false;
+    return !checkBox || !length;
   }
 
   /**
    * Generate an alert error.
    */
   generateAlert() {
-    this.dialog.open(ErrorPageComponent, {
-      data: {
-        lengthError: this.lengthError,
-        checkboxError: this.checkboxError
-      }
+    const errors = [this.lengthError, this.checkboxError].filter(error => !!error);
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: errors.join('\n')
     });
   }
 
-  savePassword() {
+  /**
+   * Opens a modal dialog to save a new password for the user.
+   * Receives the new password data from the modal dialog and sends it to the backend to be saved.
+   * Navigates to the user's password list upon success, or logs any errors to the console.
+   */
+  savePassword(): void {
+    // Open a modal dialog to save a new password
     const dialogRef = this.dialog.open(NewPasswordComponent, {
       minWidth: '50%',
-      data: { categories: this.categories, name: '', password: this.password }
+      // Pass in data to the modal dialog
+      data: { categories: this.categories, name: null, password: this.password }
     });
 
-    //Receive data and create new password when dialog is closed.
+    // Receive data and create new password when dialog is closed
     dialogRef.afterClosed().subscribe((result: NewPassword) => {
+      // Only create a new password if data was received from the modal dialog
       if (result) {
         this.pass.newUserPassword(this.user.id, result.category!, result.name, result.password)
           .subscribe({
             next: (_) => this.router.navigateByUrl('mis-passwords'),
-            error: console.log
-          })
+          });
       }
     });
   }
 
-  getCategories() {
+  /**
+ * Retrieves the categories for the current user and updates the categories array with the parsed category names.
+ */
+  getCategories(): void {
     this.us.getUserCategories(this.user.id).subscribe(categories => {
       this.categories = categories.map(category => {
         category.name = categoryName(category);
         return category;
-      })
-    })
+      });
+    });
   }
 }

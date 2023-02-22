@@ -143,7 +143,6 @@ export class PasswordService {
     return { password: password.join(''), checks };
   }
 
-
   //* HTTP Methods.
 
   deleteUserPassword(id: number) {

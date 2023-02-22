@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ErrorPageComponent } from './shared/error-page/error-page.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HomeModule } from './pages/home/home.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,7 +22,6 @@ import { UserMenuComponent } from './shared/nav-menu/user-menu/user-menu.compone
     AppComponent,
     NavMenuComponent,
     UserMenuComponent,
-    ErrorPageComponent,
     FooterComponent,
     SocialNavComponent,
     UserMenuComponent,
