@@ -1,16 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+
+import { Buffer } from 'buffer';
+
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-
 import { handleError } from 'src/app/helpers/alert-error.helper';
-
-import { LogedUser } from 'src/app/models/loged-user.interface';
-import { TokenResponse, UserResponse } from 'src/app/models/response.interface';
+import { UserResponse } from 'src/app/models/response.interface';
+import { User } from 'src/app/models/user.interface';
 
 import { environment } from 'src/environments/environment.development';
-import { User } from 'src/app/models/user.interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,40 +27,52 @@ export class AuthService {
     this.logedUser = {
       id: -1,
       name: '',
-      username: "",
-      email: "",
+      username: '',
+      email: '',
       img: '',
-      password: "",
+      password: '',
+      ...(localStorage.getItem('passToken') && this.getPayloadFromToken())
     };
-
-    if (localStorage.getItem('passToken')) {
-      const { id, username, img } = this.getPayloadFromToken();
-      this.logedUser.id = id;
-      this.logedUser.img = img;
-      this.logedUser.username = username;
-    }
   }
 
   get getUser() {
-    return this.logedUser;
+    return { ...this.logedUser };
   }
 
   setUser(user: User) {
     this.logedUser = { ...user };
   }
 
+  /**
+   * Returns the decoded payload from the passToken stored in the local storage.
+   * If there is no passToken or if it has expired, null is returned instead.
+   * 
+   * @returns The decoded payload from the passToken, or null if the token is invalid or expired.
+   */
   getPayloadFromToken(): any {
     const passToken = localStorage.getItem('passToken');
 
-    if (!passToken) return null;
+    if (!passToken || this.jwtHelper.isTokenExpired(passToken)) {
+      return null;
+    }
 
-    const payload = this.jwtHelper.decodeToken(passToken);
-    return payload;
+    return this.jwtHelper.decodeToken(passToken);
   }
 
+  /**
+   * Authenticates a user by making a POST request to the login endpoint with the user's email and password as credentials.
+   * The email and password are encoded in base64 and sent as headers to the server. If the authentication is successful,
+   * the user's token and information are saved in local storage and in the logedUser property of the service.
+   * 
+   * @param email The user's email.
+   * @param password The user's password.
+   * @returns An Observable that emits a boolean indicating if the authentication was successful or not.
+   * If successful, the boolean value is true. If unsuccessful, the boolean value is false.
+   */
   login(email: string, password: string) {
     const url = `${this.urlBase}login`;
-    const headers = new HttpHeaders({ email, password });
+    const authHeader = `Basic ${Buffer.from(`${email}:${password}`).toString('base64')}`;
+    const headers = new HttpHeaders({ Authorization: authHeader });
 
     return this.http.get<UserResponse>(url, { headers })
       .pipe(
@@ -69,7 +82,8 @@ export class AuthService {
             this.logedUser = res.user;
           }
         }),
-        map(res => res.status)
+        map(res => res.status),
+        catchError(handleError)
       );
   }
 
@@ -104,21 +118,17 @@ export class AuthService {
       );
   }
 
+  /**
+   * Sends a DELETE request to the server to delete the user account with the given id.
+   * Removes the token from localStorage and logs out the user on success.
+   * 
+   * @param id The id of the user account to be deleted.
+   * @returns An Observable that completes on success or emits an error.
+   */
   deleteAccout(id: string) {
     const url = `${this.urlBase}${id}/delete-account`;
     return this.http.delete(url).pipe(
-      tap((_) => {
-        localStorage.removeItem('passToken');
-        this.logedUser = {
-          id: -1,
-          name: '',
-          username: "",
-          email: "",
-          img: '',
-          password: "",
-        };
-
-      }),
+      tap((_) => this.logout()),
       catchError(handleError)
     )
   }
@@ -133,7 +143,7 @@ export class AuthService {
           this.logedUser = res.user;
           return true;
         }),
-        catchError(error => of(false))
+        catchError(handleError)
       );
   }
 

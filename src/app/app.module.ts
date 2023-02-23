@@ -36,7 +36,8 @@ import { UserMenuComponent } from './shared/nav-menu/user-menu/user-menu.compone
     MaterialModule,
     UserProfileModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
