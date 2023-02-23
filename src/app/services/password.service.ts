@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { catchError } from 'rxjs';
+
 import { environment } from 'src/environments/environment.development';
-import { handleError } from '../helpers/alert-error.helper';
 import { encrypt } from '../helpers/crypto.helper';
+import { handleError } from '../helpers/alert-error.helper';
 import { DataPassword } from '../models/data-password.interface';
-import { PasswordInterface } from '../models/password.interface';
+import { PasswordInterface } from '../models/passwords.interface';
 
 @Injectable({
   providedIn: 'root'

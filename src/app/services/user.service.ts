@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { catchError, map, tap } from 'rxjs';
+
 import { environment } from 'src/environments/environment.development';
 import { handleError } from '../helpers/alert-error.helper';
 import { CategoryResponse, PasswordResponse, UserResponse } from '../models/response.interface';
-import { User } from '../models/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,18 @@ export class UserService {
   ) { }
 
   //* PERSONAL INFO.
-
+  /**
+   * Returns the details of a specific user.
+   * 
+   * @param id The ID of the user to retrieve.
+   * @returns An observable of type User that contains the details of the user.
+   */
   getUser(id: number) {
-    const url = `${this.urlBase}users.routes`;
-    const headers = new HttpHeaders({ id: `${id}` });
-    return this.http.get<UserResponse>(url, { headers })
+    const url = `${this.urlBase}users.routes?id=${id}`;
+    return this.http.get<UserResponse>(url)
       .pipe(
-        map(res => res.user)
+        map(res => res.user),
+        catchError(handleError)
       );
   }
 
@@ -34,7 +40,6 @@ export class UserService {
     const body = { name, username, password };
 
     return this.http.put<UserResponse>(url, body).pipe(
-      tap(console.log),
       catchError(handleError)
     )
   }
@@ -65,7 +70,8 @@ export class UserService {
     const url = `${this.urlBase}users.routes/${id}/get-passwords`;
     return this.http.get<PasswordResponse>(url)
       .pipe(
-        map(res => res.passwords)
+        map(res => res.passwords),
+        catchError(handleError)
       );
   }
 
