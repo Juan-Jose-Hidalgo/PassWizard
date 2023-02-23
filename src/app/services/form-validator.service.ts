@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
-import { DataPassword } from '../models/data-password.interface';
 
 @Injectable({
   providedIn: 'root'
