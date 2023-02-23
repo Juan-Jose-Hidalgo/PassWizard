@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import Swal from 'sweetalert2';
-
-import { AuthService } from '../../../services/auth.service';
-import { FormValidatorService } from 'src/app/services/form-validator.service';
-import errorTranslate from 'src/app/helpers/errorTranslate.helper';
 import { Router } from '@angular/router';
+
+//* SERVICES.
+import { AuthService } from '../../../services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
-import { handleError } from 'src/app/helpers/alert-error.helper';
+import { FormValidatorService } from 'src/app/services/form-validator.service';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +13,7 @@ import { handleError } from 'src/app/helpers/alert-error.helper';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+
   registerForm: FormGroup = this.fb.group({
     name: [, Validators.required],
     username: [, Validators.required],
@@ -48,7 +46,6 @@ export class RegisterComponent {
   imgSelec(event: any): void {
     if (event.target?.files && event.target.files[0]) this.img = <File>event.target.files[0];
   }
-
 
   register() {
     if (this.registerForm.invalid) return;

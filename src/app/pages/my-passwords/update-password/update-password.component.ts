@@ -26,7 +26,6 @@ export class UpdatePasswordComponent {
 
   update() {
     const { name, password, category } = this.categoryForm.value;
-    console.log('pomelo')
     return this.result = { name, password, category }
   }
 }

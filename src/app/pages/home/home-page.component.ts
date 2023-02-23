@@ -10,7 +10,7 @@ import { NewPasswordComponent } from '../my-passwords/new-password/new-password.
 
 //* INTERFACES.
 import { DataPassword } from 'src/app/models/data-password.interface';
-import { NewPassword } from 'src/app/models/new-password.interface';
+import { NewPassword } from 'src/app/models/passwords.interface';
 
 //* HELPER FUNCTIONS.
 import { categoryName } from 'src/app/helpers/category-name.helper';

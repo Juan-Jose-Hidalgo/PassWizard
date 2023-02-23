@@ -1,5 +1,5 @@
 import { CategoryInterface } from "./category.interface";
-import { PasswordInterface } from "./password.interface";
+import { PasswordInterface } from "./passwords.interface";
 import { User } from "./user.interface";
 
 interface ResponseInterface {
