@@ -7,7 +7,6 @@ interface StrengthClassMap {
 
 /**
  * An object that maps password strength values to corresponding CSS classes.
- *
  */
 export const strengthClassMap: StrengthClassMap = {
     'débil': 'pass-gen__badget pass-gen__badget--weak',
