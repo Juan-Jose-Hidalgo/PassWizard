@@ -98,18 +98,15 @@ export class HomePageComponent implements OnInit {
   }
 
   /**
-   * Returns the CSS class corresponding to the current password strength.
-   * If the current password strength is not recognized, returns the default CSS class.
+   * Returns the CSS class corresponding to the current password strength rating, as determined by
+   * the `passwordStrength` property of the class instance.
    * 
-   * The ```strengthClassMap``` object is defined in the set-badge-class.helper.ts file, 
-   * which is located in the ```helpers directory``` and contains the mapping between password strength and CSS classes.
-   * 
-   * @returns The CSS class corresponding to the current password strength.
+   * @returns The CSS class name corresponding to the password strength rating, or the default
+   * class name if no match is found in the `strengthClassMap` object.
    */
   setBadgeClass() {
     return strengthClassMap[this.passwordStrength] || 'pass-gen__badget';
   }
-
 
   /**
    * Sets the length of the password by adding or subtracting a given number.
@@ -181,8 +178,8 @@ export class HomePageComponent implements OnInit {
   }
 
   /**
- * Retrieves the categories for the current user and updates the categories array with the parsed category names.
- */
+   * Retrieves the categories for the current user and updates the categories array with the parsed category names.
+   */
   getCategories(): void {
     this.us.getUserCategories(this.user.id).subscribe(categories => {
       this.categories = categories.map(category => {
