@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
- 
+
   urlImg = environment.URL;
 
   constructor(
@@ -31,14 +31,18 @@ export class UserProfileComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  get user(){
+  get user() {
     return this.authService.getUser;
   }
 
   ngOnInit(): void {
- 
+
   }
 
+  /**
+   * Open a dialog to update the user information.
+   * @returns void
+   */
   updateUser() {
     const data = {
       name: this.user.name,

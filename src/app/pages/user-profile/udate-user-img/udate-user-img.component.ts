@@ -35,6 +35,12 @@ export class UdateUserImgComponent {
     return this.fv.getErrorMsg(controlName, this.imgForm)
   }
 
+  /**
+   * Updates the selected image file and displays a preview of it.
+   * 
+   * @param event - The event containing the selected image file.
+   * @returns void.
+   */
   imgSelec(event: any): void {
     if (event.target?.files && event.target.files[0]) this.img = <File>event.target.files[0];
 
@@ -44,13 +50,18 @@ export class UdateUserImgComponent {
     reader.readAsDataURL(this.img);
   }
 
+  /**
+   * Updates user profile image.
+   * 
+   * @returns void.
+   */
   update() {
     if (this.imgForm.invalid) {
       this.imgForm.markAllAsTouched();
       return;
     }
 
-    this.us.updateUserImg(this.data.id, this.img, this.data.olderImg).subscribe(res =>{
+    this.us.updateUserImg(this.data.id, this.img, this.data.olderImg).subscribe(res => {
       this.authService.setUser(res.user);
     });
   }
