@@ -40,9 +40,9 @@ export class UpdateUserComponent {
     }
     const { name, username, email } = this.updateForm.value;
 
-    this.us.updateUser(this.data.userId, name, username, email).subscribe(res=>{
-      this.authService.setUser(res.user);
-      console.log(this.authService.getUser)
-    })
+    this.us.updateUser(this.data.userId, name, username, email)
+      .subscribe(res => {
+        this.authService.setUser(res.user);
+      })
   }
 }

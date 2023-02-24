@@ -17,7 +17,7 @@ import { AuthService } from '../../../services/auth.service';
 export class UdateUserImgComponent {
 
   img!: File;
-  selectedImg: string | ArrayBuffer | null = "../../../../assets/img/picture-image-svgrepo-com.svg";
+  selectedImg: string | ArrayBuffer | null = "assets/img/picture-image-svgrepo-com.svg";
 
   imgForm: FormGroup = this.fb.group({
     img: [, Validators.required]

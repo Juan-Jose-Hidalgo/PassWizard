@@ -133,6 +133,11 @@ export class AuthService {
     )
   }
 
+  /**
+   * Validates a user token by sending a GET request to the 'renew-token' endpoint.
+   * 
+   * @returns A boolean value indicating if the token validation was successful.
+   */
   validateToken() {
     const url = `${this.urlBase}renew-token`;
     const headers = new HttpHeaders({ 'x-token': localStorage.getItem('passToken') || '' });

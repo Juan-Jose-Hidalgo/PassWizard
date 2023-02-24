@@ -41,6 +41,6 @@ export class UpdateUserPasswordComponent {
     }
 
     const { password } = this.passwordForm.value;
-    this.us.updateUserPassword(this.data.id, password).subscribe(console.log);
+    this.us.updateUserPassword(this.data.id, password).subscribe();
   }
 }
