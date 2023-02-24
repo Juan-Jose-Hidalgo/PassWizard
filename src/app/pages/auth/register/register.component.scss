@@ -1,25 +1,12 @@
 @use "variables" as var;
 @use "mixins" as mix;
 
-.container--width {
-    min-height: calc(100vh - 170px);
-    justify-content: space-around;
-}
-
 .container--content {
     flex-direction: column;
-    padding: 0 2rem;
-}
+    padding: 0 .5rem;
 
-.container__h2 {
-    font-family: map-get($map: var.$fonts-map, $key: "secondary");
-    color: map-get($map: var.$colors-map, $key: "font-primary");
-    text-align: center;
-    font-size: 1.3rem;
-    margin: 1rem 0;
-
-    @media (min-width: 764px) {
-        font-size: 1.8rem;
+    @media (min-width: 768px) {
+        padding: 0 2rem;
     }
 }
 
@@ -30,51 +17,24 @@
     font-family: map-get($map: var.$fonts-map, $key: "primary");
 }
 
-.form__file {
-    &::-webkit-file-upload-button {
-        @include mix.flex-box(column);
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background: none;
-        border: none;
-        border-radius: .3125rem;
-        text-transform: uppercase;
-        font-family: map-get($map: var.$fonts-map, $key: "secondary");
-        font-weight: 700;
-        color: map-get($map: var.$colors-map, $key: "white-1");
-        background-color: map-get($map: var.$colors-map, $key: "purple-700");
-        padding: .5rem 1rem;
-        transition: all .2s ease;
-        cursor: pointer;
+@media (min-width:768px) {
+    .form__field {
+        flex: 1 0 calc(50% - 16px);
+        margin-bottom: 1rem;
+    }
 
-        &:hover {
-            background-color: map-get($map: var.$colors-map, $key: "purple-900");
-        }
+    .form__field--email {
+        flex-basis: 100%;
     }
 }
 
+.form__span {
+    display: inline-block;
+    color: map-get($map: var.$colors-map, $key: "accent-A400");
+    cursor: pointer;
+    transition: all .3s;
 
-
-    @media (min-width:768px) {
-        .form__field {
-            flex: 1 0 calc(50% - 16px);
-            margin-bottom: 1rem;
-        }
-
-        .form__field--email {
-            flex-basis: 100%;
-        }
+    &:hover {
+        color: map-get($map: var.$colors-map, $key: "accent-A100");
     }
-
-    .form__span {
-        display: inline-block;
-        color: map-get($map: var.$colors-map, $key: "accent-A400");
-        cursor: pointer;
-        margin: 2rem 0;
-        transition: all .3s;
-
-        &:hover {
-            color: map-get($map: var.$colors-map, $key: "accent-A100");
-        }
-    }
+}
