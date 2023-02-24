@@ -15,6 +15,13 @@ export class CategoryService {
     private http: HttpClient
   ) { }
 
+  /**
+   * Creates a new category by sending a POST request to the server with the specified name and user ID.
+   * 
+   * @param userId The ID of the user who is creating the category.
+   * @param name The name of the new category to be created.
+   * @returns An observable emitting a CategoryResponse object.
+   */
   newCategory(userId: number, name: string) {
     const body = { name, userId }
     return this.http.post<CategoryResponse>(this.urlBase, body).pipe(

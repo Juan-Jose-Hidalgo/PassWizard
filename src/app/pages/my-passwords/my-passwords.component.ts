@@ -58,6 +58,11 @@ export class MyPasswordsComponent implements OnInit {
     this.getPasswordsList();
   }
 
+  /**
+   * Applies a filter to the current data source based on the user's input and updates the table display.
+   * 
+   * @param event - The event containing the user's input to use as the filter value.
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -67,6 +72,18 @@ export class MyPasswordsComponent implements OnInit {
     }
   }
 
+  /**
+   * Fetches the passwords of the currently logged-in user and populates the data source for the password table.
+   * 
+   * @description This method is responsible for fetching the passwords of the currently logged-in user and 
+   * populating the data source for the password table. It subscribes to the getUserPasswords() method of
+   * the UserService to get the list of passwords, and then converts each password to a PasswordList object
+   * using the toPasswordList() method. The resulting list of PasswordList objects is then added to 
+   * the DATA array and used to populate the data source for the password table. 
+   * The method also sets the paginator and sorter for the table.
+   * 
+   * @note The DATA array is a class property that stores the list of PasswordList objects for the password table.
+   */
   getPasswordsList() {
     this.userService.getUserPasswords(this.user.id).subscribe({
       next: (passwords => {
@@ -81,6 +98,12 @@ export class MyPasswordsComponent implements OnInit {
     })
   }
 
+  /**
+   * Transforms a PasswordInterface object into a PasswordList object.
+   * 
+   * @param pass - The PasswordInterface object to be transformed.
+   * @returns The transformed PasswordList object.
+   */
   toPasswordList(pass: PasswordInterface) {
     //Extract name category from this.userCategories array.
     const { name } = this.userCategories.find(cat => cat.id === pass.categoryId)!;
@@ -95,6 +118,10 @@ export class MyPasswordsComponent implements OnInit {
     return passFile;
   }
 
+  /**
+   * Retrieves the categories associated with the current user.
+   * The retrieved categories will have their name property modified to remove the numeric part of the name.
+   */
   getCategories() {
     this.userService.getUserCategories(this.user.id).subscribe(categories => {
       this.userCategories = categories.map(cat => {
@@ -105,17 +132,11 @@ export class MyPasswordsComponent implements OnInit {
     })
   }
 
-  passVisibility(event: any) {
-    //Change input type.
-    let inputType = event.target.parentNode.parentNode.children[0].type
-    inputType = (inputType === 'password') ? 'text' : 'password';
-    event.target.parentNode.parentNode.children[0].setAttribute('type', inputType);
-
-    //Change icon img.
-    const textIcon = (inputType === 'password') ? 'visibility_off' : 'visibility';
-    event.target.innerHTML = textIcon;
-  }
-
+  /**
+   * Opens a dialog to create a new password and adds it to the user's password list.
+   * 
+   * @returns void.
+   */
   newPass() {
     //Open dialog.
     const dialogRef = this.dialog.open(NewPasswordComponent, {
@@ -136,12 +157,17 @@ export class MyPasswordsComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens a dialog to update a password.
+   * 
+   * @param id - The id of the password to update.
+   * @returns void.
+   */
   updatePassword(id: number) {
     //Prepare data for dialog.
     const { category, password, name } = this.DATA.find(element => element.passwordId === id)!;
     const categoryIndex = this.userCategories.findIndex(cat => cat.name === category)!;
     const data = { categories: this.userCategories, categoryIndex, password, name };
-
 
     //Open dialog.
     const dialogRef = this.dialog.open(UpdatePasswordComponent, {
@@ -167,6 +193,12 @@ export class MyPasswordsComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes a password with the given id.
+   * 
+   * @param id - The id of the password to be deleted.
+   * @returns void.
+   */
   deletePassword(id: number) {
     this.passService.deleteUserPassword(id).subscribe((_) => {
       const dataFilter = this.DATA.filter(password => password.passwordId !== id);
@@ -175,6 +207,10 @@ export class MyPasswordsComponent implements OnInit {
     })
   }
 
+  /**
+   * Opens a dialog to create a new category and sends a request to the server to create it.
+   * If the category is created successfully, it is added to the list of user categories.
+   */
   newCategory() {
     //Open dialog.
     const dialogRef = this.dialog.open(NewCategoryComponent, {

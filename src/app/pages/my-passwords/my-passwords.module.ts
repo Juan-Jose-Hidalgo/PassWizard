@@ -8,6 +8,7 @@ import { NewPasswordComponent } from './new-password/new-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { NewCategoryComponent } from './new-category/new-category.component';
+import { PasswordInputComponent } from './password-input/password-input.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { NewCategoryComponent } from './new-category/new-category.component';
     MyPasswordsComponent,
     NewPasswordComponent,
     UpdatePasswordComponent,
-    NewCategoryComponent
+    NewCategoryComponent,
+    PasswordInputComponent
   ],
   imports: [
     CommonModule,

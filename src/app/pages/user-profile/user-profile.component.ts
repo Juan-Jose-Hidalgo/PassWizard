@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
- 
+
   urlImg = environment.URL;
 
   constructor(
@@ -31,14 +31,18 @@ export class UserProfileComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  get user(){
+  get user() {
     return this.authService.getUser;
   }
 
   ngOnInit(): void {
- 
+
   }
 
+  /**
+   * Open a dialog to update the user information.
+   * @returns void
+   */
   updateUser() {
     const data = {
       name: this.user.name,
@@ -48,33 +52,19 @@ export class UserProfileComponent implements OnInit {
       userId: this.user.id
     }
     //Open dialog.
-    const dialog = this.dialog.open(UpdateUserComponent, {
+    this.dialog.open(UpdateUserComponent, {
       width: '90%',
       maxWidth: '1000px',
       data
     });
-
-    //After dialog closed.
-    // dialog.afterClosed().subscribe((_) => {
-    //   this.userService.getUser(this.userId).subscribe(res => {
-    //     this.user = res;
-    //   })
-    // })
   }
 
   updateImage() {
-    const dialog = this.dialog.open(UdateUserImgComponent, {
+    this.dialog.open(UdateUserImgComponent, {
       width: '90%',
       maxWidth: '500px',
       data: { id: this.user.id, olderImg: this.user.img }
     });
-
-    //After dialog closed.
-    // dialog.afterClosed().subscribe((_) => {
-    //   this.userService.getUser(this.userId).subscribe(res => {
-    //     this.user = res;
-    //   })
-    // });
   }
 
   updatePassword() {

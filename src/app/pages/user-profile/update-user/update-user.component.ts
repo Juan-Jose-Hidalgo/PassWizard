@@ -33,16 +33,30 @@ export class UpdateUserComponent {
     return this.fv.getErrorMsg(controlName, this.updateForm);
   }
 
+  /**
+
+Updates user data in the server.
+If form is invalid, marks all fields as touched.
+@returns Nothing.
+*/
+
+  /**
+   * Updates user data in the server.
+   * If form is invalid, marks all fields as touched.
+   * 
+   * @return void.
+   */
   update() {
     if (this.updateForm.invalid) {
       this.updateForm.markAllAsTouched();
       return;
     }
     const { name, username, email } = this.updateForm.value;
-
-    this.us.updateUser(this.data.userId, name, username, email).subscribe(res=>{
-      this.authService.setUser(res.user);
-      console.log(this.authService.getUser)
-    })
+    
+    // Calls the updateUser method of the UserService to update the user data.
+    this.us.updateUser(this.data.userId, name, username, email)
+      .subscribe(res => {
+        this.authService.setUser(res.user);
+      })
   }
 }

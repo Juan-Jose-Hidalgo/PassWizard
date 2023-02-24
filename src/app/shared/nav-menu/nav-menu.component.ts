@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { LogedUser } from 'src/app/models/loged-user.interface';
+import { Component} from '@angular/core';
+import { MatDialog} from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavMenuComponent implements OnInit {
+export class NavMenuComponent {
 
   constructor(
     public dialog: MatDialog,
@@ -20,7 +18,4 @@ export class NavMenuComponent implements OnInit {
     return this.authService.getUser;
   }
 
-  ngOnInit(): void {
-
-  }
 }

@@ -11,20 +11,39 @@ export class FormValidatorService {
   constructor() { }
 
   /**
-   * Check if the length parameter is correct.
-   * 
-   * @param length Length to be evaluated.
-   * @returns ```boolean```
-   */
-  lengthIsValid(length: number) {
-    if (length < 8 || length > 16 || length === null) return false;
-    return true;
+  * Checks if the specified length is valid.
+  *
+  * @param length The length to be checked.
+  * @returns A boolean value indicating if the length is valid.
+  */
+  lengthIsValid(length: number): boolean {
+    return length != null && length >= 8 && length <= 16;
   }
 
+  /**
+   * Checks if a form field is valid.
+   * 
+   * @param name The name of the form field.
+   * @param form The FormGroup object containing the form fields.
+   * @returns A boolean value indicating if the field is valid.
+   */
   fieldInvalid(name: string, form: FormGroup) {
     return form.controls[name]?.errors && form.controls[name]?.touched;
   }
 
+  /**
+   * Compares two password fields in a form to ensure they match.
+   * 
+   * @param pass1 The name of the first password field.
+   * @param pass 2 The name of the second password field.
+   * @returns A validation function for the password fields.
+   * 
+   * @description Takes the names of the two password fields as arguments 
+   * and returns a validation function for the password fields. The validation
+   * function checks if the two password fields match and sets a validation error
+   * on the secondary password field if they don't match. If the fields match,
+   * any validation error on the secondary password field is cleared.
+   */
   comparePasswords(pass1: string, pass2: string) {
     return (control: AbstractControl): ValidationErrors | null => {
       const value1 = control.get(pass1)?.value;
@@ -40,9 +59,21 @@ export class FormValidatorService {
     }
   }
 
+  /**
+   * Validates if an image file has a valid extension.
+   * 
+   * @param field The name of the image field to validate.
+   * @returns A validation function for the image field.
+   * 
+   * @description Takes the name of the image field as argument and returns a validation
+   * function for the image field.
+   * The returned validation function checks if the image file extension is valid. If it's not,
+   * it sets a validation error on the image field and returns a validation error object
+   * a validation error indicating that the image is invalid. If the extension is valid, it returns null.
+   */
   imageValidator(field: string) {
     const allowedExtensions = ['jpg', 'jpeg', 'png'];
-    
+
     return (control: AbstractControl): ValidationErrors | null => {
 
       const file = control.get(field)?.value;

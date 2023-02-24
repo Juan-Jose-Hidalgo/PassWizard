@@ -34,6 +34,14 @@ export class UpdateUserPasswordComponent {
     return this.fv.getErrorMsg(controlName, this.passwordForm);
   }
 
+  /**
+   * Handles the update of user's password.
+   * If the password form is invalid, it marks all fields as touched and returns.
+   * Otherwise, it retrieves the new password value from the form and calls the updateUserPassword method
+   * from the UserService to update the user's password in the database.
+   * 
+   * @returns void.
+   */
   update() {
     if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
@@ -41,6 +49,6 @@ export class UpdateUserPasswordComponent {
     }
 
     const { password } = this.passwordForm.value;
-    this.us.updateUserPassword(this.data.id, password).subscribe(console.log);
+    this.us.updateUserPassword(this.data.id, password).subscribe();
   }
 }

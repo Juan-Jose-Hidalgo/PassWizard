@@ -43,10 +43,28 @@ export class RegisterComponent {
     return this.fv.getErrorMsg(controlName, this.registerForm)
   }
 
+  /**
+   * Sets the `img` property to the selected image file from an `input` element.
+   * 
+   * @param event - The `change` event object that contains the selected file(s).
+   * @returns void.
+   */
   imgSelec(event: any): void {
     if (event.target?.files && event.target.files[0]) this.img = <File>event.target.files[0];
   }
 
+  /**
+   * Registers a new user.
+   * 
+   * @returns An Observable that emits the User object upon successful registration.
+   * 
+   * @description This method registers a new user by using the data provided in the register form.
+   * If the register form is invalid, this method will return without performing any action.
+   * The method then calls the register() method of the AuthService with the extracted user information and the image
+   * file (if provided).
+   * If the registration is successful, the method creates a new default category for the user and navigates to
+   * the "mis-passwords" page.
+   */
   register() {
     if (this.registerForm.invalid) return;
 
