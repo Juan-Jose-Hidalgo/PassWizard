@@ -15,6 +15,8 @@ import { SocialNavComponent } from './shared/social-nav/social-nav.component';
 import { AuthModule } from './pages/auth/auth.module';
 import { UserProfileModule } from './pages/user-profile/user-profile.module';
 import { UserMenuComponent } from './shared/nav-menu/user-menu/user-menu.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomPaginator } from './services/custom-paginator.service';
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { UserMenuComponent } from './shared/nav-menu/user-menu/user-menu.compone
     UserProfileModule
   ],
   providers: [
+    { provide: MatPaginatorIntl, useClass: CustomPaginator }
   ],
   bootstrap: [AppComponent]
 })

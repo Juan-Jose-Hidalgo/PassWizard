@@ -58,3 +58,12 @@
 }
 
 //* MODAL FORM.
+
+.modal-form {
+    @include mix.flex-box(column, nowrap);
+    gap: 1rem;
+}
+
+.modal-form__field {
+    width: 100%;
+}

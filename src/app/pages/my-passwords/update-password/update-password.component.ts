@@ -11,7 +11,7 @@ export class UpdatePasswordComponent {
   index = this.data.categoryIndex;
   categories = this.data.categories;
 
-  categoryForm: FormGroup = this.fb.group({
+  updateForm: FormGroup = this.fb.group({
     category: [this.categories[this.index].id, Validators.required],
     name: [this.data.name, Validators.required],
     password: [this.data.password]
@@ -25,7 +25,7 @@ export class UpdatePasswordComponent {
   ) { }
 
   update() {
-    const { name, password, category } = this.categoryForm.value;
+    const { name, password, category } = this.updateForm.value;
     return this.result = { name, password, category }
   }
 }
