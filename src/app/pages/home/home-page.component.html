@@ -26,7 +26,7 @@
 
                 <!--* PASSWORD LENGTH BLOCK-->
                 <div class="pass-length">
-                    <label for="length">Longitud de la contraseña:</label>
+                    <label class="pass-length__label" for="length">Longitud de la contraseña:</label>
                     <input class="pass-length__input" name="length" id="length" type="number" [(ngModel)]="data.length"
                         max="16" min="8">
                 </div>
@@ -37,17 +37,27 @@
 
                 <!--* CHECKBOXES BLOCK-->
                 <div class="pass-checks">
-                    <p>Caracteres usados:</p>
+                    <p class="pass-checks__p">Caracteres usados:</p>
                     <div class="pass-checks__group">
-                        <p><mat-checkbox color="primary" name="numbers" [(ngModel)]="data.numbers">0123</mat-checkbox>
+                        <p>
+                            <mat-checkbox color="primary" name="numbers" [(ngModel)]="data.numbers">
+                                <span class="pass-checks__span">0123</span>
+                            </mat-checkbox>
                         </p>
-                        <p><mat-checkbox color="primary" name="lowerCase"
-                                [(ngModel)]="data.lowerCase">abcd</mat-checkbox>
+                        <p>
+                            <mat-checkbox color="primary" name="lowerCase" [(ngModel)]="data.lowerCase">
+                                <span class="pass-checks__span">abcd</span>
+                            </mat-checkbox>
                         </p>
-                        <p><mat-checkbox color="primary" name="upperCase"
-                                [(ngModel)]="data.upperCase">ABCD</mat-checkbox>
+                        <p>
+                            <mat-checkbox color="primary" name="upperCase" [(ngModel)]="data.upperCase">
+                                <span class="pass-checks__span">ABCD</span>
+                            </mat-checkbox>
                         </p>
-                        <p><mat-checkbox color="primary" name="symbols" [(ngModel)]="data.symbols">@&%#</mat-checkbox>
+                        <p>
+                            <mat-checkbox color="primary" name="symbols" [(ngModel)]="data.symbols">
+                                <span class="pass-checks__span">@&%#</span>
+                            </mat-checkbox>
                         </p>
                     </div>
                 </div>

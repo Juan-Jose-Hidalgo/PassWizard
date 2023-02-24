@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Actualizar Imagen de Perfil</h2>
+<div class="diag-title">
+    <h2 mat-dialog-title class="diag-title__h2">Imagen de perfil</h2>
+    <button mat-mini-fab mat-dialog-close color="accent" class="btn--close">
+        <mat-icon class="icon--close">close</mat-icon>
+    </button>
+</div>
 <mat-dialog-content>
     <form [formGroup]="imgForm" class="img-form">
 
@@ -22,5 +27,4 @@
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="true" color="primary" [disabled]="imgForm.invalid ? true:false"
         (click)="update()">Actualizar</button>
-    <button mat-button mat-dialog-close color="warn">Cancelar</button>
 </mat-dialog-actions>

@@ -1,10 +1,6 @@
 @use "variables" as var;
 @use "mixins" as mix;
 
-.container--width {
-    min-height: calc(100vh - 170px);
-    justify-content: space-around;
-}
 
 .container--content {
     flex-direction: column;
@@ -15,11 +11,11 @@
     font-family: map-get($map: var.$fonts-map, $key: "secondary");
     color: map-get($map: var.$colors-map, $key: "font-primary");
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.3em;
     margin: 1rem 0;
 
     @media (min-width: 764px) {
-        font-size: 1.8rem;
+        font-size: 1.8em;
     }
 }
 

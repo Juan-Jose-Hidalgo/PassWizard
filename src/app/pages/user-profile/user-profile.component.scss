@@ -78,6 +78,11 @@
     }
 }
 
+.user-info__list-item-title{
+    @include mix.flex-box(row, nowrap, center, center);
+    gap: .5rem;
+}
+
 .user-info__list-item-value {
     color: map-get($map: var.$colors-map, $key: "font-primary");
     text-align: right;

@@ -1,8 +1,17 @@
 @use "variables" as var;
 @use "mixins" as mix;
 
+.container {
+    justify-content: space-around;
+    gap: 2rem;
+}
+
 .h1 {
-    font-size: 2em;
+    font-size: 1.8em;
+
+    @media(min-width: 768px) {
+        font-size: 2.2em
+    }
 }
 
 //* Styles for text block
@@ -12,10 +21,19 @@
 }
 
 .pass-text__p {
-    margin-bottom: 1rem;
+    padding: 0 1rem;
 
     @media (min-width: 992px) {
+        padding: 0;
         font-size: 1.3em;
+    }
+}
+
+.container--content {
+    box-shadow: none;
+
+    @media (min-width: 768px) {
+        @include mix.box-shadow();
     }
 }
 
@@ -45,7 +63,6 @@
 //* Styles for the checkboxes.
 .pass-checks {
     @include mix.flex-box(column, nowrap, center, center);
-    color: map-get($map: var.$colors-map, $key: "font-primary");
     gap: 1rem;
     margin-bottom: 3rem;
 }
@@ -53,6 +70,14 @@
 .pass-checks__group {
     width: 100%;
     @include mix.flex-box(row, nowrap, space-between);
+}
+
+.pass-checks__p,
+.pass-checks__span,
+.pass-length__label {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    font-size: 1.1em;
 }
 
 //* Styles for the buttons.

@@ -1,4 +1,21 @@
+@use "variables" as var;
 @use "mixins" as mix;
+
+//* NORMAL FORM.
+
+//Form title
+.form-title {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    color: map-get($map: var.$colors-map, $key: "accent-A200");
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.8em;
+    margin: 1rem 0;
+
+    @media (min-width: 764px) {
+        font-size: 2.5em;
+    }
+}
 
 .form {
     @include mix.flex-box(row, wrap, space-between);
@@ -14,4 +31,39 @@
 .form__label {
     @include mix.flex-box(row, nowrap, center);
     gap: .3rem;
+}
+
+.form__file {
+    &::-webkit-file-upload-button {
+        @include mix.flex-box(column);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: none;
+        border: none;
+        border-radius: .3125rem;
+        text-transform: uppercase;
+        font-family: map-get($map: var.$fonts-map, $key: "secondary");
+        font-weight: 700;
+        color: map-get($map: var.$colors-map, $key: "white-1");
+        background-color: map-get($map: var.$colors-map, $key: "purple-700");
+        padding: .5rem 1rem;
+        transition: all .2s ease;
+        cursor: pointer;
+
+        &:hover {
+            background-color: map-get($map: var.$colors-map, $key: "purple-900");
+        }
+    }
+}
+
+//* MODAL FORM.
+
+.modal-form {
+    @include mix.flex-box(column, nowrap);
+    gap: 1rem;
+}
+
+.modal-form__field {
+    width: 100%;
 }
