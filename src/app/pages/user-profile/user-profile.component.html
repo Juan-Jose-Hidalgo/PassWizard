@@ -10,24 +10,42 @@
             <!--* IMAGE BLOCK-->
             <div class="user-info__image">
                 <img class="user-info__image-img" [src]="urlImg+user.img" alt="Imagen de perfil del usuario">
-                <button mat-button color="accent" class="user-info__image-btn" (click)="updateImage()">Cambiar Imagen</button>
+                <button mat-button color="accent" class="user-info__image-btn" (click)="updateImage()">
+                    CambiarImagen
+                </button>
             </div>
 
             <div class="user-info__details">
                 <!--* USER DETAILS-->
                 <ul class="user-info__list">
                     <li class="user-info__list-item">
-                        Nombre: <span class="user-info__list-item-value">{{user.name}}</span>
+                        <div class="user-info__list-item-title">
+                            <mat-icon matSuffix>account_circle</mat-icon>Nombre:
+                        </div>
+                        <span class="user-info__list-item-value">{{user.name}}</span>
                     </li>
+
                     <li class="user-info__list-item">
-                        Username: <span class="user-info__list-item-value">{{user.username}}</span>
+                        <div class="user-info__list-item-title">
+                            <mat-icon matSuffix>account_box</mat-icon>Username:
+                        </div>
+                        <span class="user-info__list-item-value">{{user.username}}</span>
                     </li>
+
                     <li class="user-info__list-item">
-                        Email: <span class="user-info__list-item-value">{{user.email}}</span>
+                        <div class="user-info__list-item-title">
+                            <mat-icon matSuffix>mail</mat-icon>Email:
+                        </div>
+                        <span class="user-info__list-item-value">{{user.email}}</span>
                     </li>
+
                     <li class="user-info__list-item">
-                        Fecha de registro: <span class="user-info__list-item-value">{{user.createdAt | date:
-                            'dd-MM-YYYY'}}</span>
+                        <div class="user-info__list-item-title">
+                            <mat-icon matSuffix>event</mat-icon>Fecha de registro:
+                        </div>
+                        <span class="user-info__list-item-value">
+                            {{user.createdAt | date:'dd-MM-YYYY'}}
+                        </span>
                     </li>
                 </ul>
 
@@ -37,7 +55,8 @@
                         perfil</button>
                     <button type="submit" class="btn" mat-raised-button color="accent"
                         (click)="updatePassword()">Cambiar contraseña</button>
-                    <button type="submit" class="btn" mat-raised-button color="warn" (click)="deleteAccount()">Eliminar cuenta</button>
+                    <button type="submit" class="btn" mat-raised-button color="warn" (click)="deleteAccount()">Eliminar
+                        cuenta</button>
                 </div>
             </div>
 
