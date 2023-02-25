@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class PasswordImageComponent {
   @Input() urlImage = '';
-  @Input() image = '';
+  @Input() png = '';
+  @Input() webp = '';
   @Input() author = '';
 }
