@@ -6,7 +6,10 @@
         <header class="header__container">
             <!--* Logo-->
             <div class="header__left">
-                <img class="header__icon" src="../../../assets/img/password.png" alt="Icono de candado">
+                <picture>
+                    <source srcset="/assets/img/password.webp" type="image/webp" accept="image/webp">
+                    <img class="header__icon" ngSrc="/assets/img/password.png" alt="Descripción de la imagen">
+                  </picture>
                 <a [routerLink]="['/inicio']" class="header__title">PassWizard</a>
             </div>
 

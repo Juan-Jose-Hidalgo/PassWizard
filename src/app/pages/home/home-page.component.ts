@@ -43,9 +43,10 @@ export class HomePageComponent implements OnInit {
   categories!: any[];
 
   // Password-image inputs
-  image = '';
-  urlImage = '';
-  author = '';
+  png = ''; // URL to PNG image.
+  webp = ''; // URL to WEBP image.
+  urlImage = ''; // URL of the download site for the original image
+  author = ''; // Author of the original image.
 
   // Password-gen inputs
   password = '';
@@ -89,7 +90,8 @@ export class HomePageComponent implements OnInit {
     //Set img info and password strength.
     const strength = this.pass.chekStrongPassword(this.password, checks);
     this.passwordStrength = strength;
-    this.image = IMG_DATA[strength].img;
+    this.png = IMG_DATA[strength].png;
+    this.webp = IMG_DATA[strength].webp;
     this.urlImage = IMG_DATA[strength].url;
     this.author = IMG_DATA[strength].author;
 

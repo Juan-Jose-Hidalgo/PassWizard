@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -36,6 +37,7 @@ import { CustomPaginator } from './services/custom-paginator.service';
     HomeModule,
     HttpClientModule,
     MaterialModule,
+    NgOptimizedImage,
     UserProfileModule
   ],
   providers: [
