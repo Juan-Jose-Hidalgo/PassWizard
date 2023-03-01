@@ -33,6 +33,8 @@ export class AuthService {
       password: '',
       ...(localStorage.getItem('passToken') && this.getPayloadFromToken())
     };
+
+    console.log('Payload:', this.getPayloadFromToken());
   }
 
   get getUser() {
