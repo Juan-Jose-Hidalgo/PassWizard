@@ -14,7 +14,7 @@ import { PasswordInterface } from '../models/passwords.interface';
 })
 export class PasswordService {
 
-  private urlBase = `${environment.URL}passwords.routes`;
+  private urlBase = `${environment.URL}passwords`;
 
   constructor(
     private http: HttpClient
