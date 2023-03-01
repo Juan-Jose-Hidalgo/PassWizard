@@ -26,7 +26,7 @@ export class UserService {
    * @returns An observable of type User that contains the details of the user.
    */
   getUser(id: number) {
-    const url = `${this.urlBase}users.routes?id=${id}`;
+    const url = `${this.urlBase}users/?id=${id}`;
     return this.http.get<UserResponse>(url)
       .pipe(
         map(res => res.user),
@@ -34,9 +34,9 @@ export class UserService {
       );
   }
 
-  updateUser(id: number, name: string, username: string, password: string) {
-    const url = `${this.urlBase}users.routes/${id}`;
-    const body = { name, username, password };
+  updateUser(id: number, name: string, username: string, email: string) {
+    const url = `${this.urlBase}users/${id}`;
+    const body = { name, username, email };
 
     return this.http.put<UserResponse>(url, body).pipe(
       catchError(handleError)
@@ -56,7 +56,7 @@ export class UserService {
    * Returns an observable with the updated user data if successful or an error if failed.
    */
   updateUserImg(id: number, img: File, olderImg: string) {
-    const url = `${this.urlBase}users.routes/${id}/update-img`;
+    const url = `${this.urlBase}users/${id}/update-img`;
     const formData = new FormData();
     formData.set('img', img);
     formData.set('olderImg', olderImg);
@@ -67,7 +67,7 @@ export class UserService {
   }
 
   updateUserPassword(id: number, password: string) {
-    const url = `${this.urlBase}users.routes/${id}/update-password`;
+    const url = `${this.urlBase}users/${id}/update-password`;
     const body = { password };
 
     return this.http.patch(url, body).pipe(
@@ -83,7 +83,7 @@ export class UserService {
    * @returns An Observable that emits an array of Password objects retrieved from the server.
    */
   getUserPasswords(id: number) {
-    const url = `${this.urlBase}users.routes/${id}/get-passwords`;
+    const url = `${this.urlBase}users/${id}/get-passwords`;
     return this.http.get<PasswordResponse>(url)
       .pipe(
         map(res => res.passwords),
@@ -98,7 +98,7 @@ export class UserService {
    * @returns An observable that emits an array of Category objects associated with the user.
    */
   getUserCategories(id: number) {
-    const url = `${this.urlBase}users.routes/${id}/get-categories`;
+    const url = `${this.urlBase}users/${id}/get-categories`;
     return this.http.get<CategoryResponse>(url)
       .pipe(
         map(res => res.categories),

@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment.development';
 })
 export class AuthService {
 
-  private urlBase = `${environment.URL}users.routes/`;
+  private urlBase = `${environment.URL}`;
   private logedUser: User;
   private jwtHelper = new JwtHelperService();
 
@@ -70,7 +70,7 @@ export class AuthService {
    * If successful, the boolean value is true. If unsuccessful, the boolean value is false.
    */
   login(email: string, password: string) {
-    const url = `${this.urlBase}login`;
+    const url = `${this.urlBase}auth/login`;
     const authHeader = `Basic ${Buffer.from(`${email}:${password}`).toString('base64')}`;
     const headers = new HttpHeaders({ Authorization: authHeader });
 
@@ -106,7 +106,7 @@ export class AuthService {
     formData.set('password', password);
     formData.set('img', img);
 
-    return this.http.post<UserResponse>(`${this.urlBase}register`, formData)
+    return this.http.post<UserResponse>(`${this.urlBase}auth/register`, formData)
       .pipe(
         tap(({ status, token, user }: UserResponse) => {
           if (status) {
@@ -125,8 +125,8 @@ export class AuthService {
    * @param id The id of the user account to be deleted.
    * @returns An Observable that completes on success or emits an error.
    */
-  deleteAccout(id: string) {
-    const url = `${this.urlBase}${id}/delete-account`;
+  deleteAccount(id: string) {
+    const url = `${this.urlBase}users/${id}/delete-account`;
     return this.http.delete(url).pipe(
       tap((_) => this.logout()),
       catchError(handleError)
@@ -139,7 +139,7 @@ export class AuthService {
    * @returns A boolean value indicating if the token validation was successful.
    */
   validateToken() {
-    const url = `${this.urlBase}renew-token`;
+    const url = `${this.urlBase}auth/renew-token`;
     const headers = new HttpHeaders({ 'x-token': localStorage.getItem('passToken') || '' });
     return this.http.get<UserResponse>(url, { headers })
       .pipe(

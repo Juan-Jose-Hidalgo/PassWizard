@@ -9,7 +9,7 @@ import { CategoryResponse } from '../models/response.interface';
   providedIn: 'root'
 })
 export class CategoryService {
-  private urlBase = `${environment.URL}categories.routes`;
+  private urlBase = `${environment.URL}categories`;
 
   constructor(
     private http: HttpClient

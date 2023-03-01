@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
 
-  urlImg = environment.URL;
+  urlImg = environment.URL + this.user.img;
 
   constructor(
     public dialog: MatDialog,
@@ -48,7 +48,6 @@ export class UserProfileComponent implements OnInit {
       name: this.user.name,
       username: this.user.username,
       email: this.user.email,
-      password: this.user.password,
       userId: this.user.id
     }
     //Open dialog.
@@ -60,10 +59,16 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateImage() {
-    this.dialog.open(UdateUserImgComponent, {
+    const dialogRef = this.dialog.open(UdateUserImgComponent, {
       width: '90%',
       maxWidth: '500px',
       data: { id: this.user.id, olderImg: this.user.img }
+    });
+
+    dialogRef.afterClosed().subscribe((_) => {
+      this.urlImg = environment.URL + this.user.img;
+      console.log('Imagen',this.user.img);
+      console.log('URL',this.urlImg);
     });
   }
 
@@ -88,7 +93,7 @@ export class UserProfileComponent implements OnInit {
       cancelButtonText: 'Mejor no...',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.authService.deleteAccout(`${this.user.id}`).subscribe();
+        this.authService.deleteAccount(`${this.user.id} `).subscribe();
         Swal.fire(
           'Cuenta eliminada!',
           'Se ha eliminado tu cuenta y toda la información relacionada.',
