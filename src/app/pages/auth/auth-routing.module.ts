@@ -7,9 +7,9 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'nuevo-usuario', component: LoginComponent },
+      { path: '', component: LoginComponent },
       { path: 'registro', component: RegisterComponent },
-      { path: '**', redirectTo: 'nuevo-usuario' }
+      { path: '**', redirectTo: '' }
     ]
   }
 ];

@@ -4,12 +4,14 @@ import { TokenValidateGuard } from './guards/token-validate.guard';
 
 const routes: Routes = [
   {
-    path: 'acceso',
+    path: 'acceder',
     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'inicio',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
+    canActivate: [TokenValidateGuard],
+    canLoad: [TokenValidateGuard]
   },
   {
     path: 'mis-passwords',
@@ -23,7 +25,7 @@ const routes: Routes = [
     canActivate: [TokenValidateGuard],
     canLoad: [TokenValidateGuard]
   },
-  { path: '**', redirectTo: 'inicio' }
+  { path: '**', redirectTo: 'acceder' }
 ];
 
 @NgModule({

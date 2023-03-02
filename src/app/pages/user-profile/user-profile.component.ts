@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
-import { User } from '../../models/user.interface';
 import { UserService } from '../../services/user.service';
 
 //* ANGULAR MATERIAL
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import Swal from 'sweetalert2';
 
@@ -63,12 +62,6 @@ export class UserProfileComponent implements OnInit {
       width: '90%',
       maxWidth: '500px',
       data: { id: this.user.id, olderImg: this.user.img }
-    });
-
-    dialogRef.afterClosed().subscribe((_) => {
-      this.urlImg = environment.URL + this.user.img;
-      console.log('Imagen',this.user.img);
-      console.log('URL',this.urlImg);
     });
   }
 

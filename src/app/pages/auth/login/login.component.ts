@@ -42,6 +42,6 @@ export class LoginComponent {
     const { email, password } = this.loginForm.value;
 
     this.auth.login(email, password)
-      .subscribe((_) => this.router.navigateByUrl('mis-passwords'));
+      .subscribe((_) => this.router.navigateByUrl('inicio'));
   }
 }
