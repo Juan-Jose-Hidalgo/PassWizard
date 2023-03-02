@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavMenuComponent {
+export class NavMenuComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
@@ -18,4 +18,10 @@ export class NavMenuComponent {
     return this.authService.getUser;
   }
 
+  get isLoged() {
+    return this.authService.loged;
+  }
+
+  ngOnInit(): void {
+  }
 }

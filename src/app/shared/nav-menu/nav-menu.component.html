@@ -8,23 +8,17 @@
             <div class="header__left">
                 <picture>
                     <source srcset="/assets/img/password.webp" type="image/webp" accept="image/webp">
-                    <img class="header__icon" ngSrc="/assets/img/password.png" alt="Descripción de la imagen">
-                  </picture>
+                    <img class="header__icon" ngSrc="/assets/img/password.png" width="512" height="512"
+                        alt="Descripción de la imagen">
+                </picture>
                 <a [routerLink]="['/inicio']" class="header__title">PassWizard</a>
             </div>
 
-            <!--* Login & User-->
+            <!--* User menu-->
             <div class="header__right">
-                <ng-container *ngIf="user.id > 0;else login">
+                <ng-container *ngIf="isLoged">
                     <app-user-menu [user]="user"></app-user-menu>
                 </ng-container>
-
-                <ng-template #login>
-                    <button mat-raised-button routerLink="acceso">
-                        <mat-icon class="header__icon header__icon--login">login</mat-icon>
-                        Login
-                    </button>
-                </ng-template>
             </div>
         </header>
 

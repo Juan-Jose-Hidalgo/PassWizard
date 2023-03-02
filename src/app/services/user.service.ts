@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { catchError, map } from 'rxjs';
@@ -26,7 +26,7 @@ export class UserService {
    * @returns An observable of type User that contains the details of the user.
    */
   getUser(id: number) {
-    const url = `${this.urlBase}users/?id=${id}`;
+    const url = `${this.urlBase}users/${id}`;
     return this.http.get<UserResponse>(url)
       .pipe(
         map(res => res.user),
@@ -57,9 +57,10 @@ export class UserService {
    */
   updateUserImg(id: number, img: File, olderImg: string) {
     const url = `${this.urlBase}users/${id}/update-img`;
+
     const formData = new FormData();
-    formData.set('img', img);
-    formData.set('olderImg', olderImg);
+    formData.append('img', img);
+    formData.append('olderImg', olderImg);
 
     return this.http.patch<UserResponse>(url, formData).pipe(
       catchError(handleError)

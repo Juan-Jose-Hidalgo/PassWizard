@@ -19,28 +19,30 @@ import { environment } from 'src/environments/environment.development';
 export class AuthService {
 
   private urlBase = `${environment.URL}`;
-  private logedUser: User;
+  private logedUser!: User;
   private jwtHelper = new JwtHelperService();
+  private isLoged = false;
 
 
   constructor(private http: HttpClient) {
-    this.logedUser = {
-      id: -1,
-      name: '',
-      username: '',
-      email: '',
-      img: '',
-      password: '',
-      ...(localStorage.getItem('passToken') && this.getPayloadFromToken())
-    };
+    this.checkToken();
   }
 
   get getUser() {
     return { ...this.logedUser };
   }
 
+  get loged() {
+    return this.isLoged;
+  }
+
   setUser(user: User) {
     this.logedUser = { ...user };
+    this.logedUser.img = `${this.urlBase}${user.img}`;
+  }
+
+  setLoged() {
+    this.isLoged = true;
   }
 
   /**
@@ -79,7 +81,8 @@ export class AuthService {
         tap(res => {
           if (res.status) {
             localStorage.setItem('passToken', res.token!);
-            this.logedUser = res.user;
+            this.setUser(res.user);
+            this.isLoged = true;
           }
         }),
         map(res => res.status),
@@ -111,7 +114,8 @@ export class AuthService {
         tap(({ status, token, user }: UserResponse) => {
           if (status) {
             localStorage.setItem('passToken', token!);
-            this.logedUser = user;
+            this.setUser(user);
+            this.isLoged = true;
           }
         }),
         catchError(handleError)
@@ -145,23 +149,21 @@ export class AuthService {
       .pipe(
         map(res => {
           localStorage.setItem('passToken', res.token!)
-          this.logedUser = res.user;
+          this.setUser(res.user);
+          this.isLoged = true;
           return true;
         }),
-        catchError(handleError)
+        catchError(_err => of(false))
       );
   }
 
   logout() {
     localStorage.removeItem('passToken');
-    this.logedUser = {
-      id: -1,
-      name: '',
-      username: "",
-      email: "",
-      img: '',
-      password: "",
-    }
+    this.isLoged = false;
   }
 
+  checkToken() {
+    if (localStorage.getItem('passToken')) this.isLoged = true;
+    else this.isLoged = false;
+  }
 }
