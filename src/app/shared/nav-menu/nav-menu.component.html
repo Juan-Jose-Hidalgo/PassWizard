@@ -14,18 +14,11 @@
                 <a [routerLink]="['/inicio']" class="header__title">PassWizard</a>
             </div>
 
-            <!--* Login & User-->
+            <!--* User menu-->
             <div class="header__right">
-                <ng-container *ngIf="isLoged;else login">
+                <ng-container *ngIf="isLoged">
                     <app-user-menu [user]="user"></app-user-menu>
                 </ng-container>
-
-                <ng-template #login>
-                    <button mat-raised-button routerLink="acceso">
-                        <mat-icon class="header__icon header__icon--login">login</mat-icon>
-                        Login
-                    </button>
-                </ng-template>
             </div>
         </header>
 

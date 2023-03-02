@@ -38,6 +38,6 @@ export class UserMenuComponent implements OnInit {
 
   logOut() {
     this.authService.logout();
-    this.router.navigateByUrl('inicio');
+    this.router.navigateByUrl('acceder');
   }
 }
