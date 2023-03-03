@@ -20,6 +20,7 @@ import { PasswordInputComponent } from './password-input/password-input.componen
     PasswordInputComponent
   ],
   imports: [
+    MaterialModule,
     CommonModule,
     MaterialModule,
     MyPasswordsRoutingModule,

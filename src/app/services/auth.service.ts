@@ -97,17 +97,15 @@ export class AuthService {
    * @param username The desired username.
    * @param email The user's email address.
    * @param password The desired password.
-   * @param img The user's profile.
    * @returns An Observable that emits the server response as a UserResponse object.
    */
-  register(name: string, username: string, email: string, password: string, img: File): Observable<UserResponse> {
+  register(name: string, username: string, email: string, password: string): Observable<UserResponse> {
     const formData = new FormData();
 
     formData.set('name', name);
     formData.set('username', username);
     formData.set('email', email);
     formData.set('password', password);
-    formData.set('img', img);
 
     return this.http.post<UserResponse>(`${this.urlBase}auth/register`, formData)
       .pipe(

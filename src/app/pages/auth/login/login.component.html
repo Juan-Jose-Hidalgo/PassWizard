@@ -1,43 +1,38 @@
-<div class="container container--width">
+<div class="container container--content">
+    <h1 class="container__h1">Entra en tu cuenta de PassWizard</h1>
 
-    <h1 class="form-title">Iniciar Sesión</h1>
+    <form [formGroup]="loginForm" class="form">
 
-    <div class="container container--content">
-        <h2 class="container__h2">Inicia Sesión para guardar y gestionar tus contraseñas.</h2>
+        <!--* Email block-->
+        <mat-form-field class="form__field">
+            <mat-label class="form__label">
+                <mat-icon>alternate_email</mat-icon>
+                <span>Email</span>
+            </mat-label>
 
-        <form [formGroup]="loginForm" class="form">
+            <input type="email" matInput name="email" formControlName="email" placeholder="Ex. pat@example.com">
+            <mat-error>
+                {{getErrorMsg('email')}}
+            </mat-error>
+        </mat-form-field>
 
-            <!--* Email block-->
-            <mat-form-field class="form__field">
-                <mat-label class="form__label">
-                    <mat-icon>alternate_email</mat-icon>
-                    <span>Email</span>
-                </mat-label>
+        <!--* Password block-->
+        <mat-form-field class="form__field">
+            <mat-label class="form__label">
+                <mat-icon>lock</mat-icon>
+                <span>Contraseña</span>
+            </mat-label>
 
-                <input type="email" matInput name="email" formControlName="email" placeholder="Ex. pat@example.com">
-                <mat-error>
-                    {{getErrorMsg('email')}}
-                </mat-error>
-            </mat-form-field>
+            <input type="password" matInput name="password" formControlName="password">
+            <mat-error>
+                {{getErrorMsg('password')}}
+            </mat-error>
+        </mat-form-field>
 
-            <!--* Password block-->
-            <mat-form-field class="form__field">
-                <mat-label class="form__label">
-                    <mat-icon>lock</mat-icon>
-                    <span>Contraseña</span>
-                </mat-label>
+        <button type="submit" class="btn" mat-raised-button color="primary" [disabled]="(loginForm.invalid)?true:false"
+            (click)="login()">Iniciar sesión</button>
+    </form>
 
-                <input type="password" matInput name="password" formControlName="password">
-                <mat-error>
-                    {{getErrorMsg('password')}}
-                </mat-error>
-            </mat-form-field>
+    <p>¿No tienes cuenta? <span class="form__span" routerLink="/acceder/registro">Regístrate</span></p>
 
-            <button type="submit" class="btn" mat-raised-button color="primary"
-                [disabled]="(loginForm.invalid)?true:false" (click)="login()">Iniciar sesión</button>
-        </form>
-
-        <p>¿No tienes cuenta? <span class="form__span" routerLink="/acceder/registro">Regístrate</span></p>
-
-    </div>
 </div>
