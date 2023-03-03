@@ -26,10 +26,12 @@
 
 .form__field {
     flex-basis: 100%;
+    background-color: transparent;
 }
 
 .form__label {
     @include mix.flex-box(row, nowrap, center);
+    background-color: transparent;
     gap: .3rem;
 }
 

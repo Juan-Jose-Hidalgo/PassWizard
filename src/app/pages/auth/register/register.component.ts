@@ -18,17 +18,13 @@ export class RegisterComponent {
     name: [, Validators.required],
     username: [, Validators.required],
     email: [, [Validators.required, Validators.pattern(this.fv.emailPattern)]],
-    img: [],
     password: [, Validators.required],
     confirmPassword: [, Validators.required],
   }, {
     validators: [
       this.fv.comparePasswords('password', 'confirmPassword'),
-      this.fv.imageValidator('img')
     ]
   });
-
-  img!: File;
 
   constructor(
     private auth: AuthService,
@@ -44,16 +40,6 @@ export class RegisterComponent {
   }
 
   /**
-   * Sets the `img` property to the selected image file from an `input` element.
-   * 
-   * @param event - The `change` event object that contains the selected file(s).
-   * @returns void.
-   */
-  imgSelec(event: any): void {
-    if (event.target?.files && event.target.files[0]) this.img = <File>event.target.files[0];
-  }
-
-  /**
    * Registers a new user.
    * 
    * @returns An Observable that emits the User object upon successful registration.
@@ -65,12 +51,12 @@ export class RegisterComponent {
    * If the registration is successful, the method creates a new default category for the user and navigates to
    * the "mis-passwords" page.
    */
-  register() {
+  register(): void {
     if (this.registerForm.invalid) return;
 
     const { name, username, email, password } = this.registerForm.value;
 
-    this.auth.register(name, username, email, password, this.img)
+    this.auth.register(name, username, email, password)
       .subscribe((_) => {
         const userId = this.auth.getUser.id;
         this.catService.newCategory(userId, 'Sin Categoría').subscribe();

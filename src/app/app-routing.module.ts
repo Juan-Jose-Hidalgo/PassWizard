@@ -8,24 +8,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'inicio',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
+    path: '',
+    loadChildren: () => import('./shared/nav-menu/nav-menu.module').then(m => m.NavMenuModule),
     canActivate: [TokenValidateGuard],
     canLoad: [TokenValidateGuard]
   },
-  {
-    path: 'mis-passwords',
-    loadChildren: () => import('./pages/my-passwords/my-passwords.module').then(m => m.MyPasswordsModule),
-    canActivate: [TokenValidateGuard],
-    canLoad: [TokenValidateGuard]
-  },
-  {
-    path: 'perfil',
-    loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),
-    canActivate: [TokenValidateGuard],
-    canLoad: [TokenValidateGuard]
-  },
-  { path: '**', redirectTo: 'acceder' }
 ];
 
 @NgModule({
