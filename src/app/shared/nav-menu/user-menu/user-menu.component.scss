@@ -1,0 +1,56 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+.button--menu {
+    @include mix.flex-box();
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.button__img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.button__username {
+    display: none;
+
+    @media (min-width:768px) {
+        display: initial;
+        font-family: map-get($map: var.$fonts-map, $key: "secondary");
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+.menu {
+    @include mix.flex-box(column);
+    gap: .5rem;
+    margin-bottom: .5rem;
+}
+
+.menu__element {
+    width: 100%;
+    padding: 1rem;
+    transition: all .3s ease;
+    
+    &:hover{
+        @include mix.box-shadow();
+    }
+}
+
+.menu__link {
+    @include mix.flex-box(row, nowrap, flex-start, center);
+    gap: .5rem;
+    color: map-get($map: var.$colors-map, $key: "primary-500");
+}
+
+.menu__text {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+}
+
+.menu__button {
+    width: 100%;
+}

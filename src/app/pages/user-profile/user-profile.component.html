@@ -1,0 +1,65 @@
+<div class="container container--width">
+    <div class="container container--content">
+
+        <h2 class="title">Datos de Perfil: <span class="title__span">{{user.username}}</span></h2>
+
+        <div class="user-info">
+
+            <!--* IMAGE BLOCK-->
+            <div class="user-info__image">
+                <img class="user-info__image-img" [src]=user.img alt="Imagen de perfil del usuario">
+                <button mat-button color="accent" class="user-info__image-btn" (click)="updateImage()">
+                    CambiarImagen
+                </button>
+            </div>
+
+            <div class="user-info__details">
+                <!--* USER DETAILS-->
+                <ul class="user-info__list">
+                    <li class="user-info__list-item">
+                        <div class="user-info__list-item-title">
+                            <mat-icon matSuffix>account_circle</mat-icon>Nombre:
+                        </div>
+                        <span class="user-info__list-item-value">{{user.name}}</span>
+                    </li>
+
+                    <li class="user-info__list-item">
+                        <div class="user-info__list-item-title">
+                            <mat-icon matSuffix>account_box</mat-icon>Username:
+                        </div>
+                        <span class="user-info__list-item-value">{{user.username}}</span>
+                    </li>
+
+                    <li class="user-info__list-item">
+                        <div class="user-info__list-item-title">
+                            <mat-icon matSuffix>mail</mat-icon>Email:
+                        </div>
+                        <span class="user-info__list-item-value">{{user.email}}</span>
+                    </li>
+
+                    <li class="user-info__list-item">
+                        <div class="user-info__list-item-title">
+                            <mat-icon matSuffix>event</mat-icon>Registro:
+                        </div>
+                        <span class="user-info__list-item-value">
+                            {{user.createdAt | date:'dd-MM-YYYY'}}
+                        </span>
+                    </li>
+                </ul>
+
+                <!--* ACTION BUTTONS-->
+                <div class="user-info__actions">
+                    <button type="submit" class="btn" mat-raised-button color="primary" (click)="updateUser()">Editar
+                        perfil</button>
+                    <button type="submit" class="btn" mat-raised-button color="accent"
+                        (click)="updatePassword()">Cambiar contraseña</button>
+                    <button type="submit" class="btn" mat-raised-button color="warn" (click)="deleteAccount()">Eliminar
+                        cuenta</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

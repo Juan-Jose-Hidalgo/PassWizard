@@ -1,0 +1,14 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+.diag-title {
+    @include mix.flex-box(row, nowrap, space-between, center);
+    background-color: map-get($map: var.$colors-map, $key: "primary-500");
+    padding-right: 1.5rem;
+}
+
+.diag-title__h2 {
+    color: map-get($map: var.$colors-map, $key: "white-2") !important;
+    font-family: map-get($map: var.$fonts-map, $key: "secondary") !important;
+    font-size: 1.8em !important;
+}

@@ -1,0 +1,50 @@
+<div class="diag-title">
+    <h2 mat-dialog-title class="diag-title__h2">Actualizar Datos</h2>
+    <button mat-mini-fab mat-dialog-close color="accent" class="btn--close">
+        <mat-icon class="icon--close">close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <form [formGroup]="updateForm" enctype="multipart/form-data" class="modal-form">
+
+        <!--* Name block-->
+        <mat-form-field class="modal-form__field">
+            <mat-label class="form__label form__label--name">
+
+                <mat-icon>face</mat-icon>
+                <span class="form__label-text">Nombre</span>
+            </mat-label>
+
+            <input type="text" matInput name="name" formControlName="name" placeholder="Ex. Juan Hidalgo">
+            <mat-error class="modal-form__error">{{getErrorMsg('name')}}</mat-error>
+        </mat-form-field>
+
+        <!--* Username block-->
+        <mat-form-field class="modal-form__field">
+            <mat-label class="form__label form__label--username">
+                <mat-icon>face_4</mat-icon>
+                <span class="form__label-text">Nombre de usuario</span>
+            </mat-label>
+
+            <input type="text" matInput name="username" formControlName="username" placeholder="Ex. konra">
+            <mat-error class="modal-form__error">{{getErrorMsg('username')}}</mat-error>
+        </mat-form-field>
+
+        <!--* Email block-->
+        <mat-form-field class="modal-form__field">
+            <mat-label class="form__label form__label--email">
+                <mat-icon>alternate_email</mat-icon>
+                <span class="form__label-text">Email</span>
+            </mat-label>
+
+            <input type="email" matInput name="email" formControlName="email" placeholder="Ex. pat@example.com">
+            <mat-error class="update-form__error">{{getErrorMsg('email')}}</mat-error>
+        </mat-form-field>  
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" color="primary"
+        [disabled]="updateForm.invalid ? true:false" (click)="update()">Actualizar</button>
+</mat-dialog-actions>

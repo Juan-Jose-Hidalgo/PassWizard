@@ -1,0 +1,47 @@
+@use "mixins" as mix;
+@use "variables" as var;
+
+//* CONTAINERS
+.container {
+    @include mix.flex-box(column, nowrap, center, center);
+}
+
+.container--width {
+    width: 95%;
+    max-width: 1320px;
+    min-height: calc(100vh - 170px);
+    margin: 0 auto;
+    justify-content: space-around;
+}
+
+.container--content {
+    @include mix.box-shadow();
+    background-image: url('/assets/img/iconos.png');
+    background-color: map-get($map: var.$colors-map, $key: "white");
+    margin-top: 1rem;
+    padding: 2rem 0;
+    border: .9375rem solid map-get($map: var.$colors-map, $key: "white-2");
+    border-radius: .625rem;
+    gap: 1.2rem;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0;
+    }
+}
+
+//* TITLES
+.h1 {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    text-align: center;
+    font-size: 2em;
+    font-weight: 700;
+    margin: 1rem 0;
+
+    @media (min-width: 992px) {
+        font-size: 3em;
+    }
+}

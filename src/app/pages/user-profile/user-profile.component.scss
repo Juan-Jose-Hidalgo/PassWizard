@@ -1,0 +1,103 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+.container--width {
+    min-height: calc(100vh - 170px);
+    justify-content: center;
+    align-items: center;
+}
+
+.container--content {
+    @include mix.flex-box(column);
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.title,
+.user-info__list-item {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    color: map-get($map: var.$colors-map, $key: "primary-500");
+    font-weight: bold;
+}
+
+.title {
+    font-size: 1.8em;
+
+    @media (min-width: 764px) {
+        font-size: 2.2em;
+    }
+}
+
+.title__span {
+    color: map-get($map: var.$colors-map, $key: "primary-500");
+}
+
+.user-info {
+    width: 100%;
+    @include mix.flex-box(column, wrap);
+    gap: 1rem;
+
+    @media (min-width: 764px) {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 1.5rem;
+        gap: 0;
+    }
+}
+
+.user-info__image {
+    @include mix.flex-box(column, nowrap, center, center);
+    gap: 0.5rem;
+    width: 40%;
+    margin: 0 auto;
+
+    @media (min-width: 764px) {
+        margin: inherit;
+        width: 40%;
+    }
+}
+
+.user-info__details {
+    @include mix.flex-box(column, nowrap);
+    width: 100%;
+    gap: 1.5rem;
+
+    @media (min-width: 764px) {
+        width: 45%;
+    }
+}
+
+.user-info__list {
+    width: 100%;
+}
+
+.user-info__list-item {
+    @include mix.flex-box(row, wrap, space-between);
+    margin-bottom: .5rem;
+
+    @media (min-width: 764px) {
+        font-size: 1.2em;
+    }
+}
+
+.user-info__list-item-title {
+    @include mix.flex-box(row, nowrap, center, center);
+    gap: 0.5rem;
+}
+
+.user-info__list-item-value {
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    text-align: right;
+}
+
+.user-info__actions {
+    @include mix.flex-box(column, nowrap);
+    gap: 1rem;
+    width: 100%;
+}
+
+.btn {
+    width: 100%;
+}

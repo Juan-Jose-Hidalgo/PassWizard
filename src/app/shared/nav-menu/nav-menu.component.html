@@ -1,0 +1,34 @@
+<mat-sidenav-container>
+
+    <!--* Horizontal toolbar-->
+    <mat-toolbar color="primary" class="header">
+
+        <header class="header__container">
+            <!--* Logo-->
+            <div class="header__left">
+                <picture>
+                    <source srcset="/assets/img/password.webp" type="image/webp" accept="image/webp">
+                    <img class="header__icon" ngSrc="/assets/img/password.png" width="512" height="512"
+                        alt="Descripción de la imagen">
+                </picture>
+                <a [routerLink]="['/inicio']" class="header__title">PassWizard</a>
+            </div>
+
+            <!--* User menu-->
+            <div class="header__right">
+                <ng-container *ngIf="isLoged">
+                    <app-user-menu [user]="user"></app-user-menu>
+                </ng-container>
+            </div>
+        </header>
+
+    </mat-toolbar>
+
+    <main class="main">
+        <router-outlet></router-outlet>
+    </main>
+
+    <footer class="footer">
+        <app-footer class="footer__content"></app-footer>
+    </footer>
+</mat-sidenav-container>

@@ -1,0 +1,111 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+.container {
+    gap: 2rem;
+}
+
+.title__h1 {
+    color: map-get($map: var.$colors-map, $key: "accent-A200");
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    font-size: 1.8em;
+    font-weight: bold;
+
+    @media(min-width: 768px) {
+        font-size: 2.8em
+    }
+}
+
+.title__span {
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    font-style: italic;
+    font-size: 1.5rem;
+
+    @media(min-width: 768px) {
+        font-size: 2.2rem;
+    }
+}
+
+.pass-text__p {
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    padding: 0 1rem;
+
+    @media (min-width: 992px) {
+        padding: 0;
+        font-size: 1.3em;
+    }
+}
+
+.container--content {
+    box-shadow: none;
+    @include mix.box-shadow();
+    width: 100%;
+
+    @media (min-width: 768px) {
+    }
+}
+
+//* Styles for the password length block.
+.pass-length {
+    @include mix.flex-box(row, wrap, space-between, center);
+    font-family: map-get($map: var.$fonts-map, $key: "primary");
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+}
+
+.pass-length__input {
+    border: none;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    outline: none;
+    color: map-get($map: var.$colors-map, $key: "primary-500");
+
+    //Delete input arrows
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+//* Styles for the checkboxes.
+.pass-checks {
+    @include mix.flex-box(column, nowrap, center, center);
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.pass-checks__group {
+    width: 100%;
+    @include mix.flex-box(row, nowrap, space-between);
+}
+
+.pass-checks__p,
+.pass-checks__span,
+.pass-length__label {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    color: map-get($map: var.$colors-map, $key: "font-primary");
+    font-size: 1.1em;
+}
+
+//* Styles for the buttons.
+.pass-buttons {
+    @include mix.flex-box(column);
+    gap: .5rem;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.pass-buttons__btn {
+    width: 100%;
+    text-transform: uppercase;
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    font-weight: 700;
+
+    @media (min-width: 768px) {
+        width: 45%;
+    }
+}

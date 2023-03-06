@@ -1,0 +1,85 @@
+<div class="container container--width">
+
+    <div class="title">
+        <h1 class="title__h1">PassWizard:
+            <span class="title__span">La llave a tu seguridad</span>
+        </h1>
+    </div>
+
+    <div class="container">
+
+        <!--* TEXT BLOCK-->
+        <div class="pass-text">
+            <p class="pass-text__p">
+                En la era digital, nuestras claves de acceso son fundamentales para conectarnos con nuestras vidas en
+                línea. PassWizard es la herramienta perfecta para crear y organizar códigos de seguridad confiables.
+            </p>
+        </div>
+
+        <div class="container container--content">
+            <!--* Image Block-->
+            <app-password-image [webp]="webp" [png]="png" [urlImage]="urlImage" [author]="author"></app-password-image>
+
+            <div class="password">
+                <!--* Generated Password-->
+                <app-password-gen [password]="password" [passwordStrength]="passwordStrength"
+                    [badge]="badge"></app-password-gen>
+
+                <!--* PASSWORD LENGTH BLOCK-->
+                <div class="pass-length">
+                    <label class="pass-length__label" for="length">Longitud de la contraseña:</label>
+                    <input class="pass-length__input" name="length" id="length" type="number" [(ngModel)]="data.length"
+                        max="16" min="8">
+                </div>
+
+                <!--* SLIDER BLOCK-->
+                <app-slider [inputLength]="data.length" (inputEmit)="changeDataLength($event)"
+                    (lengthEmit)="setValue($event)"></app-slider>
+
+                <!--* CHECKBOXES BLOCK-->
+                <div class="pass-checks">
+                    <p class="pass-checks__p">Caracteres usados:</p>
+                    <div class="pass-checks__group">
+                        <p>
+                            <mat-checkbox color="primary" name="numbers" [(ngModel)]="data.numbers">
+                                <span class="pass-checks__span">0123</span>
+                            </mat-checkbox>
+                        </p>
+                        <p>
+                            <mat-checkbox color="primary" name="lowerCase" [(ngModel)]="data.lowerCase">
+                                <span class="pass-checks__span">abcd</span>
+                            </mat-checkbox>
+                        </p>
+                        <p>
+                            <mat-checkbox color="primary" name="upperCase" [(ngModel)]="data.upperCase">
+                                <span class="pass-checks__span">ABCD</span>
+                            </mat-checkbox>
+                        </p>
+                        <p>
+                            <mat-checkbox color="primary" name="symbols" [(ngModel)]="data.symbols">
+                                <span class="pass-checks__span">@&%#</span>
+                            </mat-checkbox>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pass-buttons">
+                    <button class="pass-buttons__btn" mat-raised-button color="primary"
+                        (click)="generatePassword()">Generar</button>
+                    <button class="pass-buttons__btn" mat-raised-button color="accent"
+                        (click)="savePassword()">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+        <!--* TEXT BLOCK-->
+        <div class="pass-text">
+            <p class="pass-text__p">
+                Con PassWizard, puedes generar claves personalizadas y seguras que se adaptan a tus necesidades, además
+                de clasificarlas por categorías, para que puedas acceder a ellas de manera sencilla cuando las
+                necesites. Protege tus datos personales y navega con confianza gracias a PassWizard.
+            </p>
+        </div>
+
+    </div>
+</div>

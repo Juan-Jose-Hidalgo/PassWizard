@@ -1,0 +1,30 @@
+<div class="diag-title">
+    <h2 mat-dialog-title class="diag-title__h2">Imagen de perfil</h2>
+    <button mat-mini-fab mat-dialog-close color="accent" class="btn--close">
+        <mat-icon class="icon--close">close</mat-icon>
+    </button>
+</div>
+<mat-dialog-content>
+    <form [formGroup]="imgForm" class="img-form">
+
+        <!--* IMG block-->
+        <div class="file">
+            <label for="img">Pincha en la imagen para cambiarla</label>
+            <input class="file__input" type="file" name="img" #imgInput formControlName="img"
+                (change)="imgSelec($event)" accept="image/jpeg, image/png, image/jpg">
+
+            <!--* Image preview-->
+            <div class="file__image">
+                <img [src]="selectedImg" (click)="imgInput.click()">
+            </div>
+            <mat-error>
+                {{getErrorMsg('img')}}
+            </mat-error>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" color="primary" [disabled]="imgForm.invalid ? true:false"
+        (click)="update()">Actualizar</button>
+</mat-dialog-actions>

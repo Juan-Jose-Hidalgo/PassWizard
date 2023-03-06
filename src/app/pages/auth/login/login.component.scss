@@ -1,0 +1,33 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+
+.container--content {
+    flex-direction: column;
+    padding: 0 2rem;
+    background-color: map-get($map: var.$colors-map, $key: "white-1");
+}
+
+.container__h1 {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    color: map-get($map: var.$colors-map, $key: "accent-A200");
+    text-align: center;
+    font-size: 1.3em;
+    margin: 1rem 0;
+
+    @media (min-width: 764px) {
+        font-size: 1.8em;
+    }
+}
+
+.form__span {
+    display: inline-block;
+    color: map-get($map: var.$colors-map, $key: "accent-A400");
+    cursor: pointer;
+    margin: 2rem 0;
+    transition: all .3s;
+
+    &:hover {
+        color: map-get($map: var.$colors-map, $key: "accent-A100");
+    }
+}

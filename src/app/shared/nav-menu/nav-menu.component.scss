@@ -1,0 +1,40 @@
+@use "mixins" as mix;
+@use "variables" as var;
+
+.sidenav__toolbar {
+    @include mix.flex-box(row, nowrap, space-between, center);
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+.sidenav__link {
+    cursor: pointer !important;
+    transition: all .3s;
+
+    &:hover {
+        @include mix.box-shadow();
+    }
+}
+
+.header__container {
+    @include mix.flex-box(row, nowrap, space-between, center);
+    width: 90%;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+.header__left{
+    @include mix.flex-box();
+    align-items: center;
+    gap: .6rem;
+}
+
+.header__icon{
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.header__title {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    font-weight: bold;
+    font-size: 1.2em;
+}

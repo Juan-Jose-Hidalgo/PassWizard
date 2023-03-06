@@ -1,0 +1,49 @@
+@use "variables" as var;
+@use "mixins" as mix;
+
+.footer {
+    margin-top: 2rem;
+    background-color: map-get($map: var.$colors-map, $key: "primary-500");
+    padding: 1rem 0;
+}
+
+.footer__container {
+    @include mix.flex-box(column, nowrap, space-between, center);
+    max-width: 1300px;
+    width: 90%;
+    margin: 0 auto;
+    gap: 2rem;
+
+    @media (min-width: 764px) {
+        flex-direction: row;
+    }
+}
+
+.footer__text {
+    text-align: center;
+
+    @media (min-width: 764px) {
+        text-align: left;
+    }
+}
+
+.footer__p {
+    color: map-get($map: var.$colors-map, $key: "white-2");
+}
+
+.footer__p--name {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.footer__a {
+    color: map-get($map: var.$colors-map, $key: "accent-A100");
+}
+
+.footer__nav {
+    width: 40%;
+
+    @media (min-width: 764px){
+        width: 15%;
+    }
+}
