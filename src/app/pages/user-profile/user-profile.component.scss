@@ -11,29 +11,35 @@
     @include mix.flex-box(column);
     align-items: center;
     gap: 2rem;
-    max-width: 50rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.title,
+.user-info__list-item {
+    font-family: map-get($map: var.$fonts-map, $key: "secondary");
+    color: map-get($map: var.$colors-map, $key: "primary-500");
+    font-weight: bold;
 }
 
 .title {
-    font-family: map-get($map: var.$fonts-map, $key: "secondary");
-    color: map-get($map: var.$colors-map, $key: "primary-500");
     font-size: 1.8em;
-    font-weight: bold;
 
-    @media (min-width:764px) {
+    @media (min-width: 764px) {
         font-size: 2.2em;
     }
 }
 
 .title__span {
-    color: map-get($map: var.$colors-map, $key: "font-primary");
+    color: map-get($map: var.$colors-map, $key: "primary-500");
 }
 
 .user-info {
-    @include mix.flex-box(column, nowrap, center, center);
+    width: 100%;
+    @include mix.flex-box(column, wrap);
     gap: 1rem;
 
-    @media(min-width:764px) {
+    @media (min-width: 764px) {
         flex-direction: row;
         justify-content: space-between;
         padding: 0 1.5rem;
@@ -43,21 +49,22 @@
 
 .user-info__image {
     @include mix.flex-box(column, nowrap, center, center);
-    gap: .5rem;
+    gap: 0.5rem;
     width: 40%;
     margin: 0 auto;
 
-    @media(min-width:764px) {
+    @media (min-width: 764px) {
         margin: inherit;
-        width: 45%;
+        width: 40%;
     }
 }
 
 .user-info__details {
-    @include mix.flex-box(column, nowrap, );
+    @include mix.flex-box(column, nowrap);
+    width: 100%;
     gap: 1.5rem;
 
-    @media(min-width:764px) {
+    @media (min-width: 764px) {
         width: 45%;
     }
 }
@@ -67,20 +74,17 @@
 }
 
 .user-info__list-item {
-    @include mix.flex-box(row, nowrap, space-between);
-    color: map-get($map: var.$colors-map, $key: "primary-500");
-    font-family: map-get($map: var.$fonts-map, $key: "primary");
-    font-weight: bold;
+    @include mix.flex-box(row, wrap, space-between);
     margin-bottom: .5rem;
 
-    @media(min-width:764px) {
+    @media (min-width: 764px) {
         font-size: 1.2em;
     }
 }
 
-.user-info__list-item-title{
+.user-info__list-item-title {
     @include mix.flex-box(row, nowrap, center, center);
-    gap: .5rem;
+    gap: 0.5rem;
 }
 
 .user-info__list-item-value {

@@ -11,7 +11,7 @@
         <div class="file">
             <label for="img">Pincha en la imagen para cambiarla</label>
             <input class="file__input" type="file" name="img" #imgInput formControlName="img"
-                (change)="imgSelec($event)">
+                (change)="imgSelec($event)" accept="image/jpeg, image/png, image/jpg">
 
             <!--* Image preview-->
             <div class="file__image">
