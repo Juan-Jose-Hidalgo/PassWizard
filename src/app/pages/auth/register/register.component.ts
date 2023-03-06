@@ -60,7 +60,7 @@ export class RegisterComponent {
       .subscribe((_) => {
         const userId = this.auth.getUser.id;
         this.catService.newCategory(userId, 'Sin Categoría').subscribe();
-        this.router.navigateByUrl('mis-passwords');
+        this.router.navigateByUrl('inicio');
       });
   }
 
