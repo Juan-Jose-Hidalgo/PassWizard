@@ -10,7 +10,6 @@
     font-family: map-get($map: var.$fonts-map, $key: "secondary");
     font-size: 1.8em;
     font-weight: bold;
-    margin-top: .5rem;
 
     @media(min-width: 768px) {
         font-size: 2.8em
@@ -27,16 +26,8 @@
     }
 }
 
-//* Styles for text block
-.pass-text {
-    @include mix.flex-box(column);
-    gap: .5rem;
-    color: map-get($map: var.$colors-map, $key: "font-primary");
-    line-height: 1.3;
-    order: 2;
-}
-
 .pass-text__p {
+    color: map-get($map: var.$colors-map, $key: "font-primary");
     padding: 0 1rem;
 
     @media (min-width: 992px) {
@@ -47,11 +38,10 @@
 
 .container--content {
     box-shadow: none;
+    @include mix.box-shadow();
     width: 100%;
-    order: 1;
 
     @media (min-width: 768px) {
-        @include mix.box-shadow();
     }
 }
 
@@ -100,11 +90,22 @@
 
 //* Styles for the buttons.
 .pass-buttons {
-    @include mix.flex-box(row, nowrap, space-between, center);
+    @include mix.flex-box(column);
+    gap: .5rem;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .pass-buttons__btn {
+    width: 100%;
     text-transform: uppercase;
     font-family: map-get($map: var.$fonts-map, $key: "secondary");
     font-weight: 700;
+
+    @media (min-width: 768px) {
+        width: 45%;
+    }
 }

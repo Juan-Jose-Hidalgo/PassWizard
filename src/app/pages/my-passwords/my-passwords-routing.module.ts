@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MyPasswordsComponent } from './my-passwords.component';
 
 const routes: Routes = [
-  { path: '', component: MyPasswordsComponent }
+  { path: '', title:'mis-contraseñas', component: MyPasswordsComponent }
 ];
 
 @NgModule({

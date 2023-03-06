@@ -21,13 +21,10 @@ import { Router } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
 
-  urlImg = environment.URL + this.user.img;
-
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
     private router: Router,
-    private userService: UserService
   ) { }
 
   get user() {
@@ -58,11 +55,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateImage() {
-    const dialogRef = this.dialog.open(UdateUserImgComponent, {
+    this.dialog.open(UdateUserImgComponent, {
       width: '90%',
       maxWidth: '500px',
       data: { id: this.user.id, olderImg: this.user.img }
     });
+
   }
 
   updatePassword() {
